@@ -157,6 +157,12 @@ function Rodada(){
   const [navKm,setNavKm]=useState(87);
   const [navPct,setNavPct]=useState(0);
   const [diario,setDiario]=useState(()=>{try{return JSON.parse(localStorage.getItem('rodada-diario')||'[]');}catch{return [];}});
+  // Estados levantados para evitar hooks condicionales (regla de React)
+  const [rutaMode,setRutaMode]=useState('autopista');
+  const [grupoTab,setGrupoTab]=useState('mapa');
+  // alertasFeed viene del padre
+  const [rodadaForm,setRodadaForm]=useState({nombre:'',fecha:'',hora:'',salida:'',notas:''});
+  const [rodadaLink,setRodadaLink]=useState('');
 
   const T=THEMES[tk];
   const tanque=Number(moto.tanque)||14;
@@ -220,7 +226,7 @@ function Rodada(){
   }
 
   function Ruta(){
-    const [modo,setModo]=useState('autopista');
+    const modo=rutaMode; const setModo=setRutaMode;
     const MODOS={autopista:{icon:'🛣',label:'Autopista',color:T.a,rutas:RUTAS_AUTOPISTA,desc:'Cuotas + rápidas'},carretera:{icon:'🌄',label:'Escénica',color:T.b,rutas:RUTAS_CARRETERA,desc:'Libres + paisaje'},curvas:{icon:'🔄',label:'Curvas',color:'#FB923C',rutas:RUTAS_CURVAS,desc:'Las más divertidas'},sct:{icon:'🏛',label:'SCT',color:T.c,rutas:[]}};
     const modoActual=MODOS[modo];
     const rutasActuales=modoActual.rutas;
@@ -265,10 +271,10 @@ function Rodada(){
   }
 
   function Grupo(){
-    const [tab,setTab]=useState('mapa');
+    const tab=grupoTab; const setTab=setGrupoTab;
     const [alertasFeed,setAlertasFeed]=useState([{emoji:'✅',nombre:'Carlos',texto:'Todo bien, sigan adelante',hora:'08:23'},{emoji:'🔧',nombre:'Fernanda',texto:'Caseta La Pera · $38 la tarifa moto',hora:'08:15'}]);
-    const [form,setForm]=useState({nombre:'',fecha:'',hora:'',salida:'',notas:''});
-    const [link,setLink]=useState('');
+    const form=rodadaForm; const setForm=setRodadaForm;
+    const link=rodadaLink; const setLink=setRodadaLink;
     const pos=GRUPO_POS[ruta.id]||GRUPO_POS.default;
     const riders=GRUPO_INFO.map((g,i)=>({...g,lat:pos[i][0],lng:pos[i][1]}));
     const center=routePoint(ruta.coords||RUTAS_AUTOPISTA[0].coords,.45);
