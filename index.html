@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <meta name="theme-color" content="#22C55E"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -15,7 +15,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body,#root{height:100%;overflow:hidden;}
+html,body,#root{height:100%;height:100dvh;overflow:hidden;}
+body{padding-bottom:env(safe-area-inset-bottom);}
 body{background:#070c08;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:#22C55E44;border-radius:2px;}
@@ -342,11 +343,11 @@ function Rodada(){
   const NAV=[{id:'home',ico:'🏠',lbl:'Inicio'},{id:'moto',ico:'🏍',lbl:'Mi Moto'},{id:'ruta',ico:'🗺',lbl:'Ruta'},{id:'navega',ico:'🧭',lbl:'GPS'},{id:'grupo',ico:'📡',lbl:'Grupo'},{id:'negocios',ico:'🏢',lbl:'Negoc.'},{id:'mas',ico:'⚙️',lbl:'Más'}];
   const TITLES={home:'Tu copiloto moto',moto:'Mi Moto · IA',ruta:'Planear Ruta',navega:'Navegación GPS',grupo:'Grupo + Rodadas',negocios:'Negocios',mas:'Más'};
 
-  return(<div style={{fontFamily:"'Barlow',sans-serif",background:T.bg,color:T.text,height:'100vh',display:'flex',flexDirection:'column',maxWidth:440,margin:'0 auto',overflow:'hidden',transition:'background .3s'}}>
+  return(<div style={{fontFamily:"'Barlow',sans-serif",background:T.bg,color:T.text,height:'100dvh',display:'flex',flexDirection:'column',maxWidth:440,margin:'0 auto',overflow:'hidden',transition:'background .3s'}}>
     {scr!=='navega'&&<div style={{background:T.surf,borderBottom:`1px solid ${T.border}`,padding:'11px 18px 9px',display:'flex',alignItems:'center',flexShrink:0}}><div style={{...rj(22,700,T.a),letterSpacing:4}}>RODADA</div><div style={{fontSize:10,color:T.muted,marginLeft:8,marginTop:4,...rj(10,500,T.muted),letterSpacing:2,textTransform:'uppercase'}}>{TITLES[scr]}</div><div style={{marginLeft:'auto',display:'flex',alignItems:'center',gap:6}}><div style={dot()}/><span style={{...rj(10,600,T.a)}}>GPS</span></div></div>}
     <ThemePicker/>
     <div style={{flex:1,overflow:'hidden',display:'flex',flexDirection:'column'}}>{scr==='home'&&Home()}{scr==='moto'&&MiMoto()}{scr==='ruta'&&Ruta()}{scr==='navega'&&Navega()}{scr==='grupo'&&Grupo()}{scr==='negocios'&&Negocios()}{scr==='mas'&&Mas()}</div>
-    <div style={{display:'flex',background:T.surf,borderTop:`1px solid ${T.border}`,flexShrink:0}}>{NAV.map(n=>{const a=scr===n.id;return(<button key={n.id} onClick={()=>setScr(n.id)} style={{flex:1,padding:'7px 0 9px',background:'none',border:'none',borderTop:`2px solid ${a?T.a:'transparent'}`,color:a?T.a:T.muted,cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:2,transition:'color .15s'}}><span style={{fontSize:16}}>{n.ico}</span><span style={{...rj(8,a?700:500,a?T.a:T.muted),letterSpacing:1,textTransform:'uppercase'}}>{n.lbl}</span></button>);})}</div>
+    <div style={{display:'flex',background:T.surf,borderTop:`1px solid ${T.border}`,flexShrink:0,paddingBottom:'env(safe-area-inset-bottom)'}}>{NAV.map(n=>{const a=scr===n.id;return(<button key={n.id} onClick={()=>setScr(n.id)} style={{flex:1,padding:'7px 0 9px',background:'none',border:'none',borderTop:`2px solid ${a?T.a:'transparent'}`,color:a?T.a:T.muted,cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:2,transition:'color .15s'}}><span style={{fontSize:16}}>{n.ico}</span><span style={{...rj(8,a?700:500,a?T.a:T.muted),letterSpacing:1,textTransform:'uppercase'}}>{n.lbl}</span></button>);})}</div>
   </div>);
 }
 
