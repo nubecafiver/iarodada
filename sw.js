@@ -1,4 +1,4 @@
-const V = 'rodada-v1';
+const V = 'rodada-v2'; // ← subir versión fuerza recarga de todos los archivos
 const SHELL = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e => {
@@ -7,15 +7,35 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))));
+  // Elimina cachés viejos (v1, v2-anterior, etc.)
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== V).map(k => {
+        console.log('Eliminando caché viejo:', k);
+        return caches.delete(k);
+      }))
+    )
+  );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
   const url = e.request.url;
-  if (url.includes('tile') || url.includes('fonts') || url.includes('unpkg') || url.includes('googleapis')) {
+  // Tiles, fonts y CDNs: red primero (siempre frescos)
+  if (url.includes('tile') || url.includes('fonts') ||
+      url.includes('unpkg') || url.includes('googleapis') ||
+      url.includes('anthropic')) {
     e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-  } else {
-    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+    return;
   }
+  // App shell: network first para ver siempre cambios frescos
+  e.respondWith(
+    fetch(e.request)
+      .then(res => {
+        const clone = res.clone();
+        caches.open(V).then(c => c.put(e.request, clone));
+        return res;
+      })
+      .catch(() => caches.match(e.request))
+  );
 });
