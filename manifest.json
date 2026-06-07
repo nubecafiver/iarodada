@@ -1,0 +1,15 @@
+{
+  "name": "RODADA · Tu Copiloto Moto",
+  "short_name": "RODADA",
+  "description": "App para motociclistas en México · Rutas, casetas, grupo en vivo",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070c08",
+  "theme_color": "#22C55E",
+  "orientation": "portrait-primary",
+  "lang": "es",
+  "categories": ["navigation","travel","lifestyle"],
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
