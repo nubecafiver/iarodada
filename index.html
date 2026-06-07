@@ -8,13 +8,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="RODADA"/>
-<meta name="description" content="Tu copiloto para motos en México · Rutas, casetas, grupo en vivo"/>
+<meta name="description" content="Tu copiloto para motos en Mexico"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon.svg"/>
-<title>RODADA · Tu Copiloto Moto</title>
+<title>RODADA - Tu Copiloto Moto</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@300;400;500;600&display=swap"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body,#root{height:100%;overflow:hidden;}
@@ -28,16 +27,17 @@ body{background:#070c08;}
 @keyframes ride{0%,100%{transform:translateX(0);}50%{transform:translateX(2px);}}
 @keyframes spin{to{transform:rotate(360deg);}}
 @keyframes gpsPulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7);}70%{box-shadow:0 0 0 10px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
+#loading{position:fixed;inset:0;background:#070c08;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9999;}
+#loading .spinner{width:36px;height:36px;border:3px solid #22C55E;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;}
 </style>
 </head>
 <body>
 <div id="root">
-  <div style="position:fixed;inset:0;background:#070c08;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
-    <div style="font-size:72px;filter:drop-shadow(0 0 24px #22C55E88);">🏍</div>
+  <div id="loading">
+    <div style="font-size:72px;filter:drop-shadow(0 0 24px #22C55E88);">&#x1F3CD;</div>
     <div style="color:#22C55E;font-size:26px;font-weight:900;letter-spacing:6px;font-family:sans-serif;">RODADA</div>
     <div style="color:#6B8070;font-size:12px;font-family:sans-serif;letter-spacing:2px;">TU COPILOTO MOTO</div>
-    <div style="width:36px;height:36px;border:3px solid #22C55E;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin-top:8px;"></div>
-    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    <div class="spinner"></div>
   </div>
 </div>
 
@@ -47,7 +47,7 @@ body{background:#070c08;}
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 <script type="text/babel" data-presets="react">
-i
+const { useState, useEffect, useRef } = React;
 
 // ── Base de datos local de motos México ───────────────────────────────────
 const MARCAS_DB={
@@ -94,7 +94,6 @@ const SPECS_LOCAL={
   'BMW G 310 R':            {rendimiento_kmL:28,tanque_litros:11.0,aceite_tipo:'10W-40 sintético',aceite_cada_km:6000,cadena_cada_km:500,filtro_aire_cada_km:12000,bujias_cada_km:18000,pastillas_cada_km:20000,neumaticos_cada_km:20000,presion_delantera_bar:2.2,presion_trasera_bar:2.5,potencia_hp:34,torque_nm:28,tipo:'naked',consejo_mx:'Calidad BMW a precio accesible. Aceite BMW genuine recomendado. Servicio en distribuidoras.'},
   'Benelli TRK 502':        {rendimiento_kmL:20,tanque_litros:20.0,aceite_tipo:'10W-40 semisintético',aceite_cada_km:5000,cadena_cada_km:500,filtro_aire_cada_km:10000,bujias_cada_km:12000,pastillas_cada_km:15000,neumaticos_cada_km:18000,presion_delantera_bar:2.5,presion_trasera_bar:2.8,potencia_hp:47.5,torque_nm:46,tipo:'adventure',consejo_mx:'Gran tanque de 20L. Autonomía de 400km+. Buena opción para touring en México.'},
 };
-mport { useState, useEffect, useRef } from "react";
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@300;400;500;600&display=swap');
@@ -789,21 +788,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(
 
 <script>
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
+  window.addEventListener('load',function(){
     navigator.serviceWorker.register('./sw.js')
-      .then(reg=>{
+      .then(function(reg){
         console.log('RODADA SW listo v2');
-        // Forzar actualización si hay nueva versión
-        reg.addEventListener('updatefound',()=>{
-          const newSW=reg.installing;
-          newSW.addEventListener('statechange',()=>{
+        reg.addEventListener('updatefound',function(){
+          var newSW=reg.installing;
+          newSW.addEventListener('statechange',function(){
             if(newSW.state==='installed'&&navigator.serviceWorker.controller){
               window.location.reload();
             }
           });
         });
-      })
-      .catch(e=>console.log('SW error:',e));
+      });
   });
 }
 </script>
