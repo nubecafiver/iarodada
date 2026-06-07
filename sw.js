@@ -1,4 +1,4 @@
-const V = 'rodada-v7'; // ← subir versión fuerza recarga de todos los archivos
+const V = 'rodada-v8'; // ← subir versión fuerza recarga de todos los archivos
 const SHELL = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e => {

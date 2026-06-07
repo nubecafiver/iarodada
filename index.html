@@ -6,23 +6,22 @@
 <meta name="theme-color" content="#22C55E"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="apple-mobile-web-app-title" content="RODADA"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon.svg"/>
 <title>RODADA · Córdoba, Veracruz</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;height:100dvh;overflow:hidden;}
-#root{height:100%;height:100dvh;overflow:hidden;}
-body{background:#070c08;padding-bottom:env(safe-area-inset-bottom);}
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-thumb{background:#22C55E44;border-radius:2px;}
-.leaflet-container{background:#060c07!important;}
+html,body,#root{height:100%;height:100dvh;overflow:hidden;}
+body{background:#F4F4F6;padding-bottom:env(safe-area-inset-bottom);}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:#D5D5D5;border-radius:2px;}
+.leaflet-container{background:#F9FAFB!important;}
 .leaflet-control-zoom,.leaflet-control-attribution{display:none!important;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 @keyframes livePulse{0%,100%{opacity:1;}50%{opacity:.25;}}
 @keyframes ride{0%,100%{transform:translateX(0);}50%{transform:translateX(2px);}}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -30,11 +29,11 @@ body{background:#070c08;padding-bottom:env(safe-area-inset-bottom);}
 </head>
 <body>
 <div id="root">
-<div style="position:fixed;inset:0;background:#070c08;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
-<div style="font-size:72px;">🏍</div>
-<div style="color:#22C55E;font-size:28px;font-weight:900;letter-spacing:6px;font-family:sans-serif;">RODADA</div>
-<div style="color:#6B8070;font-size:13px;font-family:sans-serif;letter-spacing:2px;">CÓRDOBA · VERACRUZ</div>
-<div style="width:38px;height:38px;border:3px solid #22C55E;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;"></div>
+<div style="position:fixed;inset:0;background:#F4F4F6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+<div style="font-size:64px;">🏍</div>
+<div style="font-size:26px;font-weight:900;letter-spacing:4px;color:#111;font-family:sans-serif;">ROD<span style="color:#22C55E">ADA</span></div>
+<div style="font-size:12px;color:#888;font-family:sans-serif;letter-spacing:2px;">CÓRDOBA · VERACRUZ</div>
+<div style="width:32px;height:32px;border:2.5px solid #22C55E;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;"></div>
 </div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -42,76 +41,76 @@ body{background:#070c08;padding-bottom:env(safe-area-inset-bottom);}
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel" data-presets="react">
-
 const { useState, useEffect, useRef } = React;
 
-const THEMES={
-  amber:{name:'ÁMBAR',desc:'Clásico',bg:'#09090b',surf:'#111317',card:'#18191f',border:'#23262e',a:'#FF7A00',aG:'#FF7A0030',aD:'#FF7A0012',b:'#22C55E',bD:'#22C55E22',c:'#38BDF8',cD:'#38BDF822',red:'#EF4444',redD:'#EF444420',yellow:'#FBBF24',text:'#F0EDE8',muted:'#8B9196'},
-  rojo:{name:'ROJO',desc:'Racing',bg:'#0c0709',surf:'#14100e',card:'#1c1415',border:'#2e2020',a:'#E53935',aG:'#E5393530',aD:'#E5393912',b:'#FF8F00',bD:'#FF8F0022',c:'#F06292',cD:'#F0629222',red:'#FF5252',redD:'#FF525220',yellow:'#FFCA28',text:'#F5EAE8',muted:'#9D7272'},
-  verde:{name:'VERDE',desc:'Aventura',bg:'#070c08',surf:'#0d1410',card:'#121c14',border:'#1a2a1c',a:'#22C55E',aG:'#22C55E30',aD:'#22C55E12',b:'#84CC16',bD:'#84CC1620',c:'#34D399',cD:'#34D39922',red:'#EF4444',redD:'#EF444420',yellow:'#FBBF24',text:'#E8F0E8',muted:'#7A9080'},
+// RODADA v8 · Diseño C Moto Pro · estilo Ducati Link
+// Fondo blanco · tipografía limpia · verde de marca
+
+const T = {
+  bg:'#F4F4F6', surf:'#FFFFFF', card:'#FFFFFF',
+  border:'#EBEBEB', borderDark:'#D5D5D5',
+  a:'#22C55E', aD:'#F0FDF4', aB:'#DCFCE7',
+  b:'#0EA5E9', bD:'#F0F9FF', bB:'#BAE6FD',
+  c:'#8B5CF6', cD:'#F5F3FF',
+  red:'#EF4444', redD:'#FFF5F5', redB:'#FEE2E2',
+  yellow:'#F59E0B', yellowD:'#FFFBEB',
+  text:'#111111', textSec:'#444444', muted:'#888888', label:'#BBBBBB',
+  dark:'#1A1A1A', white:'#FFFFFF',
+  shadow:'0 1px 10px rgba(0,0,0,.07)',
+  shadowMd:'0 4px 20px rgba(0,0,0,.1)',
 };
 
-// ── GRUPO CORDOBA ────────────────────────────────────────────────────────
-const GRUPO_CORDOBA={id:'rod-cor-ver',nombre:'Rodadores de Córdoba VER',ciudad:'Córdoba, Veracruz, México',miembros:28,lema:'¡Todos en la misma carretera!',descripcion:'Grupo oficial de motociclistas de la región Córdoba-Orizaba. Abierto a todos los estilos y modelos.',whatsapp:'https://wa.me/+52XXXXXXXXXX'};
+const GRUPO_CORDOBA={id:'rod-cor-ver',nombre:'Rodadores de Córdoba VER',ciudad:'Córdoba, Veracruz, México',miembros:28,lema:'¡Todos en la misma carretera!'};
 
-// ── RUTAS AUTOPISTA desde Córdoba, Ver. ─────────────────────────────────
 const RUTAS_AUTOPISTA=[
-  {id:'a1',label:'Córdoba → Veracruz',from:'Córdoba',to:'Veracruz',km:150,spd:90,casetas:[{n:'Cuitláhuac',f:52,lat:18.97,lng:-96.66},{n:'Jamapa',f:38,lat:19.05,lng:-96.50}],coords:[[18.884,-96.938],[18.95,-96.80],[19.05,-96.60],[19.10,-96.45],[19.17,-96.13]]},
-  {id:'a2',label:'Córdoba → Puebla',from:'Córdoba',to:'Puebla',km:195,spd:90,casetas:[{n:'Cumbres de Maltrata',f:65,lat:18.81,lng:-97.11},{n:'Tehuitzingo',f:45,lat:18.35,lng:-97.80}],coords:[[18.884,-96.938],[18.85,-97.0],[18.81,-97.11],[18.60,-97.50],[19.04,-98.20]]},
-  {id:'a3',label:'Córdoba → CDMX',from:'Córdoba',to:'CDMX',km:280,spd:95,casetas:[{n:'Cumbres',f:65,lat:18.81,lng:-97.11},{n:'Tehuitzingo',f:45,lat:18.35,lng:-97.80},{n:'Tlalpan',f:42,lat:19.28,lng:-99.19}],coords:[[18.884,-96.938],[18.81,-97.11],[18.60,-97.50],[19.04,-98.20],[19.43,-99.13]]},
-  {id:'a4',label:'Córdoba → Xalapa',from:'Córdoba',to:'Xalapa',km:110,spd:80,casetas:[{n:'El Bejero',f:38,lat:19.15,lng:-96.72}],coords:[[18.884,-96.938],[18.95,-96.80],[19.10,-96.75],[19.20,-96.73],[19.54,-96.93]]},
-  {id:'a5',label:'Orizaba → Tehuacán',from:'Orizaba',to:'Tehuacán',km:95,spd:85,casetas:[{n:'San Marcos',f:35,lat:18.65,lng:-97.35}],coords:[[18.850,-97.103],[18.75,-97.20],[18.65,-97.35],[18.46,-97.39]]},
-  {id:'a6',label:'Córdoba → Coatzacoalcos',from:'Córdoba',to:'Coatzacoalcos',km:220,spd:90,casetas:[{n:'Acayucan',f:55,lat:17.95,lng:-94.91}],coords:[[18.884,-96.938],[18.60,-95.80],[18.20,-95.20],[17.95,-94.91]]},
+  {id:'a1',label:'Córdoba → Veracruz',from:'Córdoba',to:'Veracruz',km:150,spd:90,casetas:[{n:'Cuitláhuac',f:52,lat:18.97,lng:-96.66},{n:'Jamapa',f:38,lat:19.05,lng:-96.50}],coords:[[18.884,-96.938],[18.95,-96.80],[19.05,-96.60],[19.17,-96.13]]},
+  {id:'a2',label:'Córdoba → Puebla',from:'Córdoba',to:'Puebla',km:195,spd:90,casetas:[{n:'Cumbres de Maltrata',f:65,lat:18.81,lng:-97.11},{n:'Tehuitzingo',f:45,lat:18.35,lng:-97.80}],coords:[[18.884,-96.938],[18.81,-97.11],[18.60,-97.50],[19.04,-98.20]]},
+  {id:'a3',label:'Córdoba → CDMX',from:'Córdoba',to:'CDMX',km:280,spd:95,casetas:[{n:'Cumbres',f:65,lat:18.81,lng:-97.11},{n:'Tlalpan',f:42,lat:19.28,lng:-99.19}],coords:[[18.884,-96.938],[18.81,-97.11],[19.04,-98.20],[19.43,-99.13]]},
+  {id:'a4',label:'Córdoba → Xalapa',from:'Córdoba',to:'Xalapa',km:110,spd:80,casetas:[{n:'El Bejero',f:38,lat:19.15,lng:-96.72}],coords:[[18.884,-96.938],[18.95,-96.80],[19.20,-96.73],[19.54,-96.93]]},
+  {id:'a5',label:'Orizaba → Tehuacán',from:'Orizaba',to:'Tehuacán',km:95,spd:85,casetas:[{n:'San Marcos',f:35}],coords:[[18.850,-97.103],[18.65,-97.35],[18.46,-97.39]]},
+  {id:'a6',label:'Córdoba → Coatzacoalcos',from:'Córdoba',to:'Coatzacoalcos',km:220,spd:90,casetas:[{n:'Acayucan',f:55}],coords:[[18.884,-96.938],[18.20,-95.20],[17.95,-94.91]]},
 ];
-
-// ── RUTAS ESCÉNICAS ──────────────────────────────────────────────────────
 const RUTAS_CARRETERA=[
-  {id:'c1',label:'Córdoba → Fortín de las Flores 🌺',from:'Córdoba',to:'Fortín',km:12,spd:45,nota:'La ciudad de las flores • 10 minutos puro paisaje',casetas:[],coords:[[18.884,-96.938],[18.907,-97.000]]},
-  {id:'c2',label:'Córdoba → Huatusco ☕ (café)',from:'Córdoba',to:'Huatusco',km:45,spd:55,nota:'Zona cafetalera • carretera libre con montaña',casetas:[],coords:[[18.884,-96.938],[18.95,-96.95],[19.16,-96.97]]},
-  {id:'c3',label:'Orizaba → Zongolica 🌿 (sierra)',from:'Orizaba',to:'Zongolica',km:50,spd:40,nota:'Sierra de Zongolica • pueblo indígena en la montaña',casetas:[],coords:[[18.850,-97.103],[18.80,-97.0],[18.67,-96.99]]},
-  {id:'c4',label:'Córdoba → Tlacotalpan 🏛 UNESCO',from:'Córdoba',to:'Tlacotalpan',km:150,spd:65,nota:'Pueblo Mágico Patrimonio UNESCO • arquitectura colonial colorida',casetas:[],coords:[[18.884,-96.938],[18.70,-95.90],[18.61,-95.66]]},
-  {id:'c5',label:'Córdoba → Catemaco 🌊 (lago)',from:'Córdoba',to:'Catemaco',km:130,spd:65,nota:'Lago cráter volcánico • zona de brujos y naturaleza',casetas:[],coords:[[18.884,-96.938],[18.60,-95.40],[18.42,-95.11]]},
-  {id:'c6',label:'Veracruz → La Antigua 🏖 (costera)',from:'Veracruz',to:'La Antigua',km:40,spd:55,nota:'Carretera costera • pueblo colonial más antiguo de América',casetas:[],coords:[[19.173,-96.134],[19.25,-96.28],[19.34,-96.40]]},
+  {id:'c1',label:'Córdoba → Fortín de las Flores 🌺',from:'Córdoba',to:'Fortín',km:12,spd:45,nota:'La ciudad de las flores · 10 minutos',casetas:[],coords:[[18.884,-96.938],[18.907,-97.000]]},
+  {id:'c2',label:'Córdoba → Huatusco ☕ Zona Cafetalera',from:'Córdoba',to:'Huatusco',km:45,spd:55,nota:'Carretera libre con montaña y café',casetas:[],coords:[[18.884,-96.938],[18.95,-96.95],[19.16,-96.97]]},
+  {id:'c3',label:'Orizaba → Zongolica 🌿 Sierra',from:'Orizaba',to:'Zongolica',km:50,spd:40,nota:'Sierra Zongolica · pueblo en la montaña',casetas:[],coords:[[18.850,-97.103],[18.80,-97.0],[18.67,-96.99]]},
+  {id:'c4',label:'Córdoba → Tlacotalpan 🏛 UNESCO',from:'Córdoba',to:'Tlacotalpan',km:150,spd:65,nota:'Pueblo Mágico Patrimonio UNESCO',casetas:[],coords:[[18.884,-96.938],[18.70,-95.90],[18.61,-95.66]]},
+  {id:'c5',label:'Córdoba → Catemaco 🌊 Lago Volcánico',from:'Córdoba',to:'Catemaco',km:130,spd:65,nota:'Lago en cráter volcánico',casetas:[],coords:[[18.884,-96.938],[18.60,-95.40],[18.42,-95.11]]},
+  {id:'c6',label:'Veracruz → La Antigua 🏖 Costera',from:'Veracruz',to:'La Antigua',km:40,spd:55,nota:'Carretera costera colonial',casetas:[],coords:[[19.173,-96.134],[19.25,-96.28],[19.34,-96.40]]},
 ];
-
-// ── RUTAS CURVAS ─────────────────────────────────────────────────────────
 const RUTAS_CURVAS=[
-  {id:'v1',label:'Cumbres de Maltrata 🔄 (LA ruta)',from:'Córdoba',to:'Cumbres',km:45,spd:40,nota:'La bajada más famosa de México • obligatorio para todo motero veracruzano',casetas:[{n:'Cumbres',f:65,lat:18.81,lng:-97.11}],coords:[[18.884,-96.938],[18.86,-97.00],[18.82,-97.05],[18.81,-97.11]]},
-  {id:'v2',label:'Cañón del Río Blanco 🏞',from:'Orizaba',to:'Cañón R. Blanco',km:35,spd:45,nota:'Cañón espectacular • curvas entre acantilados y río',casetas:[],coords:[[18.850,-97.103],[18.84,-97.05],[18.83,-97.08]]},
-  {id:'v3',label:'Zongolica mountain loop 🌿',from:'Córdoba',to:'Zongolica loop',km:90,spd:40,nota:'Sierra Zongolica • las curvas más técnicas de Veracruz',casetas:[],coords:[[18.884,-96.938],[18.80,-97.0],[18.67,-96.99],[18.80,-96.85],[18.884,-96.938]]},
-  {id:'v4',label:'Huatusco → Xalapa ☕ café road',from:'Huatusco',to:'Xalapa',km:90,spd:50,nota:'Carretera cafetalera • nubes bajas y curvas entre cafetales',casetas:[],coords:[[19.16,-96.97],[19.30,-96.95],[19.54,-96.93]]},
-  {id:'v5',label:'Orizaba → Teziutlán ⛰ (extrema)',from:'Orizaba',to:'Teziutlán',km:85,spd:35,nota:'Solo expertos • curvas de montaña extremas entre Veracruz y Puebla',casetas:[],coords:[[18.850,-97.103],[18.90,-97.20],[19.10,-97.35],[19.82,-97.36]]},
-  {id:'v6',label:'Puente Metlac 🌉 loop',from:'Córdoba',to:'Metlac loop',km:30,spd:50,nota:'El puente colgante más icónico de la autopista • vistas al cañón',casetas:[{n:'Cumbres',f:65,lat:18.81,lng:-97.11}],coords:[[18.884,-96.938],[18.88,-97.01],[18.87,-97.00],[18.884,-96.938]]},
+  {id:'v1',label:'Cumbres de Maltrata 🔄 — La ruta',from:'Córdoba',to:'Cumbres',km:45,spd:40,nota:'La bajada más famosa de México',casetas:[{n:'Cumbres',f:65,lat:18.81,lng:-97.11}],coords:[[18.884,-96.938],[18.86,-97.00],[18.81,-97.11]]},
+  {id:'v2',label:'Cañón del Río Blanco 🏞',from:'Orizaba',to:'Cañón R.Blanco',km:35,spd:45,nota:'Cañón entre acantilados espectacular',casetas:[],coords:[[18.850,-97.103],[18.84,-97.05],[18.83,-97.08]]},
+  {id:'v3',label:'Zongolica Mountain Loop 🌿',from:'Córdoba',to:'Zongolica loop',km:90,spd:40,nota:'Las curvas más técnicas de Veracruz',casetas:[],coords:[[18.884,-96.938],[18.80,-97.0],[18.67,-96.99],[18.884,-96.938]]},
+  {id:'v4',label:'Huatusco → Xalapa ☕ Café Road',from:'Huatusco',to:'Xalapa',km:90,spd:50,nota:'Curvas entre cafetales y nubes',casetas:[],coords:[[19.16,-96.97],[19.30,-96.95],[19.54,-96.93]]},
+  {id:'v5',label:'Orizaba → Teziutlán ⛰ Extrema',from:'Orizaba',to:'Teziutlán',km:85,spd:35,nota:'Solo expertos · extrema montaña',casetas:[],coords:[[18.850,-97.103],[19.10,-97.35],[19.82,-97.36]]},
+  {id:'v6',label:'Puente Metlac 🌉 Loop',from:'Córdoba',to:'Metlac loop',km:30,spd:50,nota:'Puente colgante icónico · vistas al cañón',casetas:[{n:'Cumbres',f:65,lat:18.81,lng:-97.11}],coords:[[18.884,-96.938],[18.88,-97.01],[18.884,-96.938]]},
 ];
-
-// ── SPOTS MOTEROS CÓRDOBA-VERACRUZ ────────────────────────────────────────
 const SPOTS_MOTO=[
-  {name:'Cumbres de Maltrata 🔄',lat:18.81,lng:-97.11,icon:'#22C55E',desc:'La bajada más famosa de México • obligatorio'},
-  {name:'Pico de Orizaba ⛰',lat:19.03,lng:-97.27,icon:'#84CC16',desc:'Volcán más alto de México • 5,636m'},
-  {name:'Fortín de las Flores 🌺',lat:18.91,lng:-97.00,icon:'#F472B6',desc:'Ciudad de las flores • 10min de Córdoba'},
-  {name:'Cañón Río Blanco 🏞',lat:18.83,lng:-97.08,icon:'#FB923C',desc:'Cañón entre acantilados espectacular'},
-  {name:'Puente Metlac 🌉',lat:18.88,lng:-97.01,icon:'#FBBF24',desc:'Puente colgante icónico en la autopista'},
-  {name:'Laguna Catemaco 🌊',lat:18.42,lng:-95.11,icon:'#38BDF8',desc:'Lago en cráter volcánico • zona de brujos'},
-  {name:'Tlacotalpan 🏛',lat:18.61,lng:-95.66,icon:'#A78BFA',desc:'Pueblo Mágico UNESCO • arquitectura colonial'},
-  {name:'Orizaba 🏙',lat:18.85,lng:-97.10,icon:'#34D399',desc:'Monumento a la Bandera • centro histórico'},
-  {name:'La Antigua 🏖',lat:19.34,lng:-96.40,icon:'#FF7A00',desc:'Pueblo colonial más antiguo de América'},
+  {name:'Cumbres de Maltrata 🔄',lat:18.81,lng:-97.11,icon:'#22C55E',desc:'La bajada más famosa · obligatorio'},
+  {name:'Pico de Orizaba ⛰',lat:19.03,lng:-97.27,icon:'#6B7280',desc:'Volcán más alto de México · 5,636m'},
+  {name:'Fortín de las Flores 🌺',lat:18.91,lng:-97.00,icon:'#EC4899',desc:'Ciudad de las flores · 10min de Córdoba'},
+  {name:'Cañón Río Blanco 🏞',lat:18.83,lng:-97.08,icon:'#F59E0B',desc:'Cañón espectacular · curvas'},
+  {name:'Puente Metlac 🌉',lat:18.88,lng:-97.01,icon:'#6366F1',desc:'Puente icónico en la autopista'},
+  {name:'Catemaco 🌊',lat:18.42,lng:-95.11,icon:'#0EA5E9',desc:'Lago cráter volcánico'},
+  {name:'Tlacotalpan 🏛',lat:18.61,lng:-95.66,icon:'#8B5CF6',desc:'UNESCO · pueblo colonial'},
+  {name:'Orizaba 🏙',lat:18.85,lng:-97.10,icon:'#22C55E',desc:'Centro histórico · Monumento Bandera'},
 ];
-
-const GRUPO_POS_COR=[[18.884,-96.938],[18.910,-96.965],[18.862,-96.915],[18.900,-96.900],[18.875,-96.950]];
-const GRUPO_INFO=[{name:'Tú',color:'#22C55E',you:true,spd:78,bat:82,pct:55},{name:'Chavo',color:'#84CC16',you:false,spd:75,bat:65,pct:62},{name:'Karen',color:'#34D399',you:false,spd:72,bat:54,pct:48},{name:'Memo',color:'#A78BFA',you:false,spd:81,bat:91,pct:70},{name:'Lupe',color:'#F472B6',you:false,spd:70,bat:77,pct:43}];
-const NEGOCIOS=[{id:1,ico:'🔧',cat:'Taller',name:'Moto Service Córdoba',stars:4.8,rev:94,promo:'10% OFF cambio de aceite moteros',km:1.2,sp:true},{id:2,ico:'⛽',cat:'Gasolinera',name:'Pemex Blvd Lauro Aguirre',stars:4.3,rev:52,promo:'Magna $24.50/L · Premium $26.80',km:0.8,sp:true},{id:3,ico:'🍽',cat:'Restaurante',name:'El Rincón del Café Córdoba',stars:4.7,rev:178,promo:'Desayuno motero $85 con café',km:2.1,sp:false},{id:4,ico:'🏨',cat:'Hospedaje',name:'Hotel Zevallos (moto parking)',stars:4.4,rev:67,promo:'Estacionamiento techado gratis',km:3.5,sp:true},{id:5,ico:'🛒',cat:'Accesorios',name:'Rider Shop Orizaba',stars:4.6,rev:201,promo:'15% en cascos Helmet Box',km:38,sp:false}];
+const GRUPO_POS=[[18.884,-96.938],[18.910,-96.965],[18.862,-96.915],[18.900,-96.900],[18.875,-96.950]];
+const GRUPO_INFO=[{name:'Tú',color:'#22C55E',you:true,spd:78,bat:82,pct:55},{name:'Chavo',color:'#0EA5E9',you:false,spd:75,bat:65,pct:62},{name:'Karen',color:'#EC4899',you:false,spd:72,bat:54,pct:48},{name:'Memo',color:'#8B5CF6',you:false,spd:81,bat:91,pct:70},{name:'Lupe',color:'#F59E0B',you:false,spd:70,bat:77,pct:43}];
+const NEGOCIOS=[{id:1,ico:'🔧',cat:'Taller',name:'Moto Service Córdoba',stars:4.8,rev:94,promo:'10% OFF cambio de aceite',km:1.2,sp:true},{id:2,ico:'⛽',cat:'Gasolinera',name:'Pemex Blvd. Lauro Aguirre',stars:4.3,rev:52,promo:'Magna $24.50/L · Premium $26.80',km:0.8,sp:true},{id:3,ico:'🍽',cat:'Restaurante',name:'El Rincón del Café',stars:4.7,rev:178,promo:'Desayuno motero $85 + café',km:2.1,sp:false},{id:4,ico:'🏨',cat:'Hospedaje',name:'Hotel Zevallos',stars:4.4,rev:67,promo:'Parking techado gratis',km:3.5,sp:true},{id:5,ico:'🛒',cat:'Accesorios',name:'Rider Shop Orizaba',stars:4.6,rev:201,promo:'15% en cascos esta semana',km:38,sp:false}];
 const MANT_DEF=[{item:'Aceite de motor',cada:'3,000 km',ult:2800,prox:3000,urg:true},{item:'Filtro de aire',cada:'10,000 km',ult:8200,prox:10000,urg:false},{item:'Tensión de cadena',cada:'500 km',ult:350,prox:500,urg:false},{item:'Pastillas de freno',cada:'15,000 km',ult:11000,prox:15000,urg:false},{item:'Bujías',cada:'12,000 km',ult:9500,prox:12000,urg:false},{item:'Neumáticos',cada:'20,000 km',ult:14000,prox:20000,urg:false}];
-const NAV_STEPS=[{icon:'↑',txt:'Sigue por Blvd. Lauro Aguirre',dist:'3.2 km'},{icon:'↗',txt:'Incorpora a la autopista 150D dir. Cumbres',dist:'8.5 km'},{icon:'↑',txt:'Mantén derecha · subida a Cumbres de Maltrata',dist:'14.2 km'},{icon:'↙',txt:'Gira izquierda al mirador Cumbres',dist:'2.1 km'},{icon:'↑',txt:'Llega a Cumbres de Maltrata ¡disfruta la bajada!',dist:'0.5 km'}];
-const ALERTAS_PRESET=[{id:1,emoji:'🛑',label:'Me detuve',color:'#EF4444',msg:'Parada no planeada — esperen por favor'},{id:2,emoji:'⚠️',label:'Peligro adelante',color:'#FBBF24',msg:'Cuidado: hay peligro adelante'},{id:3,emoji:'✅',label:'Todo bien',color:'#22C55E',msg:'Todo bien, sigan adelante'},{id:4,emoji:'🔄',label:'Reagruparse',color:'#38BDF8',msg:'Reagrupémonos aquí'},{id:5,emoji:'⛽',label:'Cargando gasolina',color:'#84CC16',msg:'Parando a cargar — 5min'},{id:6,emoji:'🔧',label:'Revisión mecánica',color:'#A78BFA',msg:'Problema mecánico — necesito ayuda'}];
-const MARCAS_DB={'CFMoto':{color:'#FF8C00',models:['450MT','650MT','800MT','300NK','650NK']},'Honda':{color:'#CC0000',models:['CB650R','CB500F','CB500X','CB190R','CB300R','Africa Twin']},'Yamaha':{color:'#0066CC',models:['MT-07','MT-09','MT-03','FZ-25','R3','Ténéré 700']},'Kawasaki':{color:'#009900',models:['Z400','Z650','Z900','Ninja 400','Ninja 650','Versys 650']},'Suzuki':{color:'#003399',models:['GSX-S750','GSX-S1000','V-Strom 650','SV650']},'Royal Enfield':{color:'#8B4513',models:['Meteor 350','Hunter 350','Classic 350','Himalayan 450']},'Bajaj':{color:'#1565C0',models:['Pulsar NS200','Pulsar RS200','Dominar 400']},'KTM':{color:'#FF6600',models:['Duke 200','Duke 390','Duke 790','Adventure 390']},'BMW':{color:'#1C6FC8',models:['G 310 R','G 310 GS','F 800 GS','R 1250 GS']},'Triumph':{color:'#003B7A',models:['Trident 660','Tiger 900','Speed Triple']},'Benelli':{color:'#C0392B',models:['TRK 502','TRK 702','Leoncino 500']},'Harley-Davidson':{color:'#FF6600',models:['Iron 883','Sportster S','Fat Bob 114']}};
-const SPECS_LOCAL={'CFMoto 450MT':{rendimiento_kmL:22,tanque_litros:17,aceite_tipo:'10W-40 semisintético',aceite_cada_km:4000,cadena_cada_km:500,filtro_aire_cada_km:10000,bujias_cada_km:12000,pastillas_cada_km:15000,neumaticos_cada_km:20000,presion_delantera_bar:2.5,presion_trasera_bar:2.8,potencia_hp:47,torque_nm:43,tipo:'adventure',consejo_mx:'Ideal para Cumbres de Maltrata. Revisa cadena cada 500km.'},'Honda CB500F':{rendimiento_kmL:25,tanque_litros:17.3,aceite_tipo:'10W-30 semisintético',aceite_cada_km:5000,cadena_cada_km:500,filtro_aire_cada_km:12000,bujias_cada_km:16000,pastillas_cada_km:20000,neumaticos_cada_km:22000,presion_delantera_bar:2.2,presion_trasera_bar:2.5,potencia_hp:47,torque_nm:43,tipo:'naked',consejo_mx:'Perfecta para Veracruz. Económica en calor.'},'Yamaha MT-07':{rendimiento_kmL:20,tanque_litros:13,aceite_tipo:'10W-40 sintético',aceite_cada_km:5000,cadena_cada_km:500,filtro_aire_cada_km:10000,bujias_cada_km:24000,pastillas_cada_km:20000,neumaticos_cada_km:18000,presion_delantera_bar:2.5,presion_trasera_bar:2.9,potencia_hp:73,torque_nm:68,tipo:'naked',consejo_mx:'Tanque 13L — planea parada de gasolina antes de Cumbres.'},'Bajaj Pulsar NS200':{rendimiento_kmL:35,tanque_litros:12,aceite_tipo:'10W-30 semisintético',aceite_cada_km:3000,cadena_cada_km:500,filtro_aire_cada_km:8000,bujias_cada_km:8000,pastillas_cada_km:12000,neumaticos_cada_km:18000,presion_delantera_bar:2.0,presion_trasera_bar:2.2,potencia_hp:24.5,torque_nm:18.74,tipo:'naked',consejo_mx:'Muy económica para la región. Cambio de aceite puntual.'},'Honda CB190R':{rendimiento_kmL:38,tanque_litros:13.2,aceite_tipo:'10W-30 semisintético',aceite_cada_km:3000,cadena_cada_km:500,filtro_aire_cada_km:8000,bujias_cada_km:8000,pastillas_cada_km:12000,neumaticos_cada_km:20000,presion_delantera_bar:2.0,presion_trasera_bar:2.2,potencia_hp:16.6,torque_nm:16.6,tipo:'naked',consejo_mx:'Ideal para ciudad y carreteras de Veracruz.'}};
+const NAV_STEPS=[{icon:'↑',txt:'Sigue por Blvd. Lauro Aguirre',dist:'3.2 km'},{icon:'↗',txt:'Incorpora a la autopista 150D · Cumbres',dist:'8.5 km'},{icon:'↑',txt:'Mantén derecha · subida a Cumbres',dist:'14.2 km'},{icon:'↙',txt:'Gira izquierda · Mirador Cumbres',dist:'2.1 km'},{icon:'↑',txt:'Llegaste a Cumbres de Maltrata 🎉',dist:'0.5 km'}];
+const ALERTAS_PRESET=[{id:1,emoji:'🛑',label:'Me detuve',color:'#EF4444',msg:'Parada — esperen por favor'},{id:2,emoji:'⚠️',label:'Peligro',color:'#F59E0B',msg:'Cuidado: hay peligro adelante'},{id:3,emoji:'✅',label:'Todo bien',color:'#22C55E',msg:'Todo bien, sigan'},{id:4,emoji:'🔄',label:'Reagrupar',color:'#0EA5E9',msg:'Reagrupémonos aquí'},{id:5,emoji:'⛽',label:'Gasolina',color:'#84CC16',msg:'Parando a cargar — 5min'},{id:6,emoji:'🔧',label:'Mecánico',color:'#8B5CF6',msg:'Problema mecánico — ayuda'}];
+const MARCAS_DB={'CFMoto':{color:'#FF8C00',models:['450MT','650MT','800MT','300NK','650NK']},'Honda':{color:'#CC0000',models:['CB650R','CB500F','CB500X','CB190R','CB300R','Africa Twin']},'Yamaha':{color:'#0066CC',models:['MT-07','MT-09','MT-03','FZ-25','R3','Ténéré 700']},'Kawasaki':{color:'#009900',models:['Z400','Z650','Z900','Ninja 400','Ninja 650','Versys 650']},'Suzuki':{color:'#003399',models:['GSX-S750','V-Strom 650','SV650']},'Royal Enfield':{color:'#8B4513',models:['Meteor 350','Hunter 350','Classic 350','Himalayan 450']},'Bajaj':{color:'#1565C0',models:['Pulsar NS200','Pulsar RS200','Dominar 400']},'KTM':{color:'#FF6600',models:['Duke 200','Duke 390','Duke 790','Adventure 390']},'BMW':{color:'#1C6FC8',models:['G 310 R','G 310 GS','F 800 GS']},'Triumph':{color:'#003B7A',models:['Trident 660','Tiger 900','Speed Triple']},'Benelli':{color:'#C0392B',models:['TRK 502','TRK 702','Leoncino 500']},'Harley-Davidson':{color:'#FF6600',models:['Iron 883','Sportster S','Fat Bob 114']}};
+const SPECS_LOCAL={'CFMoto 450MT':{rendimiento_kmL:22,tanque_litros:17,aceite_tipo:'10W-40 semisintético',aceite_cada_km:4000,cadena_cada_km:500,filtro_aire_cada_km:10000,bujias_cada_km:12000,pastillas_cada_km:15000,neumaticos_cada_km:20000,presion_delantera_bar:2.5,presion_trasera_bar:2.8,potencia_hp:47,torque_nm:43,tipo:'adventure',consejo_mx:'Ideal para Cumbres de Maltrata. Revisa cadena cada 500km.'},'Honda CB500F':{rendimiento_kmL:25,tanque_litros:17.3,aceite_tipo:'10W-30 semisintético',aceite_cada_km:5000,cadena_cada_km:500,filtro_aire_cada_km:12000,bujias_cada_km:16000,pastillas_cada_km:20000,neumaticos_cada_km:22000,presion_delantera_bar:2.2,presion_trasera_bar:2.5,potencia_hp:47,torque_nm:43,tipo:'naked',consejo_mx:'Perfecta para Veracruz. Económica en calor.'},'Yamaha MT-07':{rendimiento_kmL:20,tanque_litros:13,aceite_tipo:'10W-40 sintético',aceite_cada_km:5000,cadena_cada_km:500,filtro_aire_cada_km:10000,bujias_cada_km:24000,pastillas_cada_km:20000,neumaticos_cada_km:18000,presion_delantera_bar:2.5,presion_trasera_bar:2.9,potencia_hp:73,torque_nm:68,tipo:'naked',consejo_mx:'Tanque 13L — planea parada antes de Cumbres.'},'Bajaj Pulsar NS200':{rendimiento_kmL:35,tanque_litros:12,aceite_tipo:'10W-30 semisintético',aceite_cada_km:3000,cadena_cada_km:500,filtro_aire_cada_km:8000,bujias_cada_km:8000,pastillas_cada_km:12000,neumaticos_cada_km:18000,presion_delantera_bar:2.0,presion_trasera_bar:2.2,potencia_hp:24.5,torque_nm:18.74,tipo:'naked',consejo_mx:'Económica para la región.'},'Honda CB190R':{rendimiento_kmL:38,tanque_litros:13.2,aceite_tipo:'10W-30 semisintético',aceite_cada_km:3000,cadena_cada_km:500,filtro_aire_cada_km:8000,bujias_cada_km:8000,pastillas_cada_km:12000,neumaticos_cada_km:20000,presion_delantera_bar:2.0,presion_trasera_bar:2.2,potencia_hp:16.6,torque_nm:16.6,tipo:'naked',consejo_mx:'Ideal para ciudad y carreteras de Veracruz.'}};
 
 const mxn=n=>'$'+Math.round(n).toLocaleString('es-MX');
 const htime=h=>{const hr=Math.floor(h),mn=Math.round((h-hr)*60);return hr>0?hr+'h '+mn+'min':mn+'min';};
-function routePoint(coords,t){if(!coords||coords.length<2)return[18.884,-96.938];if(t<=0)return coords[0];if(t>=1)return coords[coords.length-1];const lens=[];let tot=0;for(let i=0;i<coords.length-1;i++){const d=Math.sqrt((coords[i+1][0]-coords[i][0])**2+(coords[i+1][1]-coords[i][1])**2);lens.push(d);tot+=d;}let tgt=t*tot,cum=0;for(let i=0;i<lens.length;i++){if(cum+lens[i]>=tgt){const s=(tgt-cum)/lens[i];return[coords[i][0]+s*(coords[i+1][0]-coords[i][0]),coords[i][1]+s*(coords[i+1][1]-coords[i][1])];}cum+=lens[i];}return coords[coords.length-1];}
+function routePoint(c,t){if(!c||c.length<2)return[18.884,-96.938];if(t<=0)return c[0];if(t>=1)return c[c.length-1];const ls=[];let tot=0;for(let i=0;i<c.length-1;i++){const d=Math.sqrt((c[i+1][0]-c[i][0])**2+(c[i+1][1]-c[i][1])**2);ls.push(d);tot+=d;}let tgt=t*tot,cum=0;for(let i=0;i<ls.length;i++){if(cum+ls[i]>=tgt){const s=(tgt-cum)/ls[i];return[c[i][0]+s*(c[i+1][0]-c[i][0]),c[i][1]+s*(c[i+1][1]-c[i][1])];}cum+=ls[i];}return c[c.length-1];}
 
-let _lfP=false;const _lfC=[];
-function loadLeaflet(cb){if(window.L){cb();return;}_lfC.push(cb);if(_lfP)return;_lfP=true;const s=document.createElement('script');s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';s.onload=()=>{_lfC.forEach(f=>f());_lfC.length=0;};document.head.appendChild(s);}
+let _lP=false;const _lC=[];
+function loadLeaflet(cb){if(window.L){cb();return;}_lC.push(cb);if(_lP)return;_lP=true;const s=document.createElement('script');s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';s.onload=()=>{_lC.forEach(f=>f());_lC.length=0;};document.head.appendChild(s);}
 
 function MapaReal({height=200,center,zoom=12,riders=[],route=[],casetas=[],spots=[],label='',accentColor='#22C55E',showGPS=false}){
   const ref=useRef(null);
@@ -120,25 +119,24 @@ function MapaReal({height=200,center,zoom=12,riders=[],route=[],casetas=[],spots
   useEffect(()=>{
     if(!listo||!ref.current)return;
     const L=window.L;
-    const c=center||[18.884,-96.938];
-    const map=L.map(ref.current,{center:c,zoom,zoomControl:false,attributionControl:false});
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd'}).addTo(map);
-    if(route&&route.length>1){L.polyline(route,{color:'#7C3AED',weight:5,opacity:.8}).addTo(map);L.polyline(route,{color:'#A78BFA',weight:2,opacity:.4}).addTo(map);}
-    (casetas||[]).forEach(c=>{if(!c.lat)return;const ic=L.divIcon({html:'<div style="background:#FB923C;color:#fff;font-size:10px;font-weight:700;padding:3px 7px;border-radius:5px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.6)">⛩ '+c.n+' $'+c.f+'</div>',className:'',iconAnchor:[0,10]});L.marker([c.lat,c.lng],{icon:ic}).addTo(map);});
-    (spots||[]).forEach(s=>{const ic=L.divIcon({html:'<div style="background:'+s.icon+';color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.7);cursor:pointer">'+s.name.slice(0,18)+'</div>',className:'',iconAnchor:[0,10]});L.marker([s.lat,s.lng],{icon:ic}).addTo(map).bindPopup('<b>'+s.name+'</b><br>'+s.desc,{maxWidth:170});});
-    (riders||[]).forEach(r=>{const sz=r.you?22:15;const ic=L.divIcon({html:'<div style="width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+r.color+';border:2.5px solid white;box-shadow:0 0 8px '+r.color+'"></div>',className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});const mk=L.marker([r.lat,r.lng],{icon:ic}).addTo(map);if(r.name)mk.bindPopup('<b>'+r.name+'</b>'+(r.spd?'<br>'+r.spd+' km/h':''),{maxWidth:120});if(r.you)setTimeout(()=>mk.openPopup(),400);});
-    if(showGPS){const ctrl=L.control({position:'bottomright'});ctrl.onAdd=()=>{const btn=document.createElement('button');btn.innerHTML='📍 Mi GPS';btn.style.cssText='background:'+accentColor+';color:#040804;border:none;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;';btn.onclick=()=>{navigator.geolocation&&navigator.geolocation.getCurrentPosition(pos=>{map.setView([pos.coords.latitude,pos.coords.longitude],15);const ic=L.divIcon({html:'<div style="width:22px;height:22px;border-radius:50%;background:'+accentColor+';border:3px solid white;box-shadow:0 0 12px '+accentColor+'"></div>',className:'',iconSize:[22,22],iconAnchor:[11,11]});L.marker([pos.coords.latitude,pos.coords.longitude],{icon:ic}).addTo(map).bindPopup('📍 Tú estás aquí').openPopup();});};return btn;};ctrl.addTo(map);}
+    const map=L.map(ref.current,{center:center||[18.884,-96.938],zoom,zoomControl:false,attributionControl:false});
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd'}).addTo(map);
+    if(route&&route.length>1)L.polyline(route,{color:accentColor,weight:4,opacity:.9}).addTo(map);
+    (casetas||[]).forEach(c=>{if(!c.lat)return;const ic=L.divIcon({html:'<div style="background:#fff;color:#EF4444;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;border:1px solid #FCA5A5;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.2)">⛩ '+c.n+' $'+c.f+'</div>',className:'',iconAnchor:[0,10]});L.marker([c.lat,c.lng],{icon:ic}).addTo(map);});
+    (spots||[]).forEach(s=>{const ic=L.divIcon({html:'<div style="background:#fff;color:'+s.icon+';font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;border:1px solid '+s.icon+'44;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.15);cursor:pointer">'+s.name.slice(0,20)+'</div>',className:'',iconAnchor:[0,10]});L.marker([s.lat,s.lng],{icon:ic}).addTo(map).bindPopup('<b>'+s.name+'</b><br>'+s.desc,{maxWidth:160});});
+    (riders||[]).forEach(r=>{const sz=r.you?22:15;const ic=L.divIcon({html:'<div style="width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+r.color+';border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>',className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});const mk=L.marker([r.lat,r.lng],{icon:ic}).addTo(map);if(r.name)mk.bindPopup('<b>'+r.name+'</b>'+(r.spd?'<br>'+r.spd+' km/h':''),{maxWidth:120});if(r.you)setTimeout(()=>mk.openPopup(),400);});
+    if(showGPS){const ctrl=L.control({position:'bottomright'});ctrl.onAdd=()=>{const btn=document.createElement('button');btn.innerHTML='📍 Mi GPS';btn.style.cssText='background:#22C55E;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);';btn.onclick=()=>{navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>{map.setView([p.coords.latitude,p.coords.longitude],15);const ic=L.divIcon({html:'<div style="width:22px;height:22px;border-radius:50%;background:#22C55E;border:3px solid white;box-shadow:0 2px 10px rgba(0,0,0,.3)"></div>',className:'',iconSize:[22,22],iconAnchor:[11,11]});L.marker([p.coords.latitude,p.coords.longitude],{icon:ic}).addTo(map).bindPopup('📍 Tú estás aquí').openPopup();});};return btn;};ctrl.addTo(map);}
     setTimeout(()=>map.invalidateSize(),200);
     return()=>map.remove();
   },[listo]);
-  return React.createElement('div',{style:{height:height,borderRadius:12,overflow:'hidden',position:'relative'}},
+  return React.createElement('div',{style:{height,borderRadius:12,overflow:'hidden',position:'relative',border:'1px solid #EBEBEB'}},
     React.createElement('div',{ref:ref,style:{width:'100%',height:'100%'}}),
-    !listo&&React.createElement('div',{style:{position:'absolute',inset:0,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',background:'#060c07',gap:10}},
-      React.createElement('div',{style:{width:24,height:24,border:'3px solid '+accentColor,borderTopColor:'transparent',borderRadius:'50%',animation:'spin .8s linear infinite'}}),
-      React.createElement('div',{style:{fontFamily:"'Rajdhani',sans-serif",fontSize:13,color:accentColor}},'Cargando mapa...')),
-    label&&listo&&React.createElement('div',{style:{position:'absolute',top:10,left:10,background:'#00000099',backdropFilter:'blur(6px)',borderRadius:8,padding:'5px 10px',display:'flex',alignItems:'center',gap:6,zIndex:1000}},
-      React.createElement('div',{style:{width:7,height:7,borderRadius:'50%',background:accentColor,animation:'livePulse 2s infinite'}}),
-      React.createElement('span',{style:{fontFamily:"'Rajdhani',sans-serif",fontSize:12,fontWeight:600,color:accentColor}},label))
+    !listo&&React.createElement('div',{style:{position:'absolute',inset:0,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',background:'#F9FAFB',gap:10}},
+      React.createElement('div',{style:{width:24,height:24,border:'2px solid #22C55E',borderTopColor:'transparent',borderRadius:'50%',animation:'spin .8s linear infinite'}}),
+      React.createElement('div',{style:{fontSize:13,color:'#888'}},'Cargando mapa...')),
+    label&&listo&&React.createElement('div',{style:{position:'absolute',top:10,left:10,background:'rgba(255,255,255,.9)',backdropFilter:'blur(6px)',borderRadius:8,padding:'4px 10px',display:'flex',alignItems:'center',gap:6,zIndex:1000,border:'1px solid #EBEBEB'}},
+      React.createElement('div',{style:{width:6,height:6,borderRadius:'50%',background:'#22C55E',animation:'livePulse 2s infinite'}}),
+      React.createElement('span',{style:{fontSize:11,fontWeight:700,color:'#111'}},label))
   );
 }
 
@@ -149,8 +147,6 @@ async function fetchMotoSpecs(marca,modelo,year){
 }
 
 function Rodada(){
-  // ── Todo el estado del componente aquí (nunca en funciones hijas) ──────
-  const [tk,setTk]=useState('verde');
   const [usuario,setUsuario]=useState(()=>{try{return JSON.parse(localStorage.getItem('rodada-usuario')||'null');}catch{return null;}});
   const [scr,setScr]=useState(()=>localStorage.getItem('rodada-usuario')?'home':'reg');
   const [regForm,setRegForm]=useState({nombre:'',moto:'',ciudad:'Córdoba, Ver.',tel:''});
@@ -169,7 +165,6 @@ function Rodada(){
   const [rodadaForm,setRodadaForm]=useState({nombre:'',fecha:'',hora:'',salida:'',notas:''});
   const [rodadaLink,setRodadaLink]=useState('');
 
-  const T=THEMES[tk];
   const tanque=Number(moto.tanque)||14;
   const rend=Number(moto.rend)||22;
   const autonomia=tanque*rend;
@@ -180,306 +175,185 @@ function Rodada(){
   const total=casTotal+gasCosto;
   const tHoras=ruta.km/(ruta.spd||80);
   const sinAlc=ruta.km>autonomia;
+  const mantItems=specs?[{item:'Aceite · '+specs.aceite_tipo,cada:(specs.aceite_cada_km||3000).toLocaleString()+' km',ult:2800,prox:specs.aceite_cada_km||3000,urg:(specs.aceite_cada_km-2800)<500},specs.cadena_cada_km?{item:'Cadena',cada:specs.cadena_cada_km+' km',ult:350,prox:specs.cadena_cada_km,urg:false}:null,{item:'Filtro de aire',cada:(specs.filtro_aire_cada_km||10000).toLocaleString()+' km',ult:8200,prox:specs.filtro_aire_cada_km||10000,urg:false},{item:'Bujías',cada:(specs.bujias_cada_km||12000).toLocaleString()+' km',ult:9500,prox:specs.bujias_cada_km||12000,urg:false},{item:'Pastillas',cada:(specs.pastillas_cada_km||15000).toLocaleString()+' km',ult:11000,prox:specs.pastillas_cada_km||15000,urg:false},{item:'Neumáticos',cada:(specs.neumaticos_cada_km||20000).toLocaleString()+' km',ult:14000,prox:specs.neumaticos_cada_km||20000,urg:false}].filter(Boolean):MANT_DEF;
 
-  const mantItems=specs?[
-    {item:'Aceite · '+specs.aceite_tipo,cada:(specs.aceite_cada_km||3000).toLocaleString()+' km',ult:2800,prox:specs.aceite_cada_km||3000,urg:(specs.aceite_cada_km-2800)<500},
-    specs.cadena_cada_km?{item:'Tensión de cadena',cada:specs.cadena_cada_km+' km',ult:350,prox:specs.cadena_cada_km,urg:false}:null,
-    {item:'Filtro de aire',cada:(specs.filtro_aire_cada_km||10000).toLocaleString()+' km',ult:8200,prox:specs.filtro_aire_cada_km||10000,urg:false},
-    {item:'Bujías',cada:(specs.bujias_cada_km||12000).toLocaleString()+' km',ult:9500,prox:specs.bujias_cada_km||12000,urg:false},
-    {item:'Pastillas de freno',cada:(specs.pastillas_cada_km||15000).toLocaleString()+' km',ult:11000,prox:specs.pastillas_cada_km||15000,urg:false},
-    {item:'Neumáticos',cada:(specs.neumaticos_cada_km||20000).toLocaleString()+' km',ult:14000,prox:specs.neumaticos_cada_km||20000,urg:false},
-  ].filter(Boolean):MANT_DEF;
-
-  function guardarRegistro(){
-    if(!regForm.nombre.trim()||!regForm.moto.trim())return;
-    const u={...regForm,grupo:GRUPO_CORDOBA.id,fechaRegistro:new Date().toISOString(),id:'user_'+Date.now()};
-    setUsuario(u);
-    try{localStorage.setItem('rodada-usuario',JSON.stringify(u));}catch(e){}
-    setScr('home');
-  }
+  function guardarRegistro(){if(!regForm.nombre.trim()||!regForm.moto.trim())return;const u={...regForm,grupo:GRUPO_CORDOBA.id,fechaRegistro:new Date().toISOString(),id:'user_'+Date.now()};setUsuario(u);try{localStorage.setItem('rodada-usuario',JSON.stringify(u));}catch(e){}setScr('home');}
   function guardarEnDiario(){const e={id:Date.now(),fecha:new Date().toLocaleDateString('es-MX'),ruta:ruta.label,km:ruta.km,tiempo:htime(tHoras),costo:mxn(total)};const n=[e,...diario].slice(0,30);setDiario(n);try{localStorage.setItem('rodada-diario',JSON.stringify(n));}catch(e){}return e;}
   function enviarAlerta(a){setAlertasFeed(f=>[{emoji:a.emoji,nombre:usuario?.nombre||'Tú',texto:a.msg,hora:new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}),color:a.color},...f.slice(0,19)]);}
-  function generarLink(){const base=window.location.origin+window.location.pathname;const p=new URLSearchParams({r:rodadaForm.nombre,f:rodadaForm.fecha,h:rodadaForm.hora,s:rodadaForm.salida});setRodadaLink(base+'?'+p.toString());}
+  function generarLink(){const p=new URLSearchParams({r:rodadaForm.nombre,f:rodadaForm.fecha,h:rodadaForm.hora,s:rodadaForm.salida});setRodadaLink(window.location.origin+window.location.pathname+'?'+p.toString());}
 
-  // ── Helpers de estilos ──────────────────────────────────────────────────
-  const card=(x={})=>({background:T.card,border:'1px solid '+T.border,borderRadius:14,padding:'16px 18px',marginBottom:14,animation:'fadeUp .22s ease',...x});
-  const inp=()=>({background:T.bg,border:'1px solid '+T.border,borderRadius:10,color:T.text,fontFamily:"'Barlow',sans-serif",fontSize:16,padding:'11px 14px',width:'100%',outline:'none'});
+  // ── Helpers de estilos (tema claro) ───────────────────────────────────
+  const card=(x={})=>({background:T.card,boxShadow:T.shadow,borderRadius:16,padding:'16px 18px',marginBottom:14,...x});
+  const cardFlat=(x={})=>({background:T.card,border:'1px solid '+T.border,borderRadius:16,padding:'16px 18px',marginBottom:14,...x});
+  const inp=()=>({background:'#F9FAFB',border:'1px solid #E5E7EB',borderRadius:10,color:T.text,fontFamily:"'Inter',sans-serif",fontSize:16,padding:'11px 14px',width:'100%',outline:'none'});
   const inpHL=()=>({...inp(),borderColor:T.a,background:T.aD});
   const lbl=()=>({fontSize:13,color:T.muted,marginBottom:6,display:'block',fontWeight:500});
-  const sec=(x={})=>({fontFamily:"'Rajdhani',sans-serif",fontSize:11,letterSpacing:2.5,color:T.muted,textTransform:'uppercase',marginBottom:12,...x});
-  const rj=(sz,w=700,c=T.text)=>({fontFamily:"'Rajdhani',sans-serif",fontSize:sz,fontWeight:w,color:c});
-  const tg=(col)=>({display:'inline-flex',alignItems:'center',background:col+'22',border:'1px solid '+col+'44',color:col,fontSize:10,letterSpacing:1.5,padding:'3px 9px',borderRadius:20,...rj(10,700,col)});
-  const pill=(active)=>({flex:1,padding:'10px',background:active?T.aD:'transparent',border:'1px solid '+(active?T.a:T.border),borderRadius:10,color:active?T.a:T.muted,cursor:'pointer',fontFamily:"'Barlow',sans-serif",fontSize:14,fontWeight:600,transition:'all .2s'});
-  const sb=(col=T.a)=>({background:col+'12',borderRadius:12,padding:'13px'});
-  const dot=()=>({width:8,height:8,borderRadius:'50%',background:T.a,boxShadow:'0 0 6px '+T.a,animation:'livePulse 2s infinite',display:'inline-block'});
-  const btnP=(bg=T.a,c='#040804')=>({width:'100%',padding:'15px',background:bg,border:'none',borderRadius:13,color:c,...rj(16,700,c),cursor:'pointer',letterSpacing:2});
-  const tabBtn=(active,col)=>({flex:1,padding:'11px 6px',background:'none',border:'none',borderBottom:'2.5px solid '+(active?(col||T.a):'transparent'),color:active?(col||T.a):T.muted,cursor:'pointer',fontSize:13,fontWeight:active?600:400,fontFamily:"'Barlow',sans-serif",transition:'all .15s'});
+  const sec=(x={})=>({fontSize:11,fontWeight:700,letterSpacing:1.5,color:T.label,textTransform:'uppercase',marginBottom:12,...x});
+  const pill=(active,col=T.a)=>({flex:1,padding:'10px',background:active?T.aD:'transparent',border:'1.5px solid '+(active?col:T.border),borderRadius:10,color:active?col:T.muted,cursor:'pointer',fontFamily:"'Inter',sans-serif",fontSize:14,fontWeight:600,transition:'all .2s'});
+  const sb=(col=T.a,bg=col+'12')=>({background:bg,borderRadius:14,padding:'14px'});
+  const btnSolid=(bg=T.dark,c='#fff')=>({width:'100%',padding:'15px',background:bg,border:'none',borderRadius:12,color:c,fontSize:15,fontWeight:700,cursor:'pointer',letterSpacing:.5});
+  const btnOutline=(col=T.a)=>({padding:'12px 20px',background:'transparent',border:'1.5px solid '+col,borderRadius:12,color:col,fontSize:14,fontWeight:700,cursor:'pointer'});
+  const tg=(col)=>({display:'inline-flex',alignItems:'center',background:col+'15',border:'1px solid '+col+'30',color:col,fontSize:11,fontWeight:700,letterSpacing:.5,padding:'3px 10px',borderRadius:20});
+  const tabTop=(active)=>({flex:1,padding:'12px 8px',background:'none',border:'none',borderBottom:'2.5px solid '+(active?T.a:'transparent'),color:active?T.text:T.muted,cursor:'pointer',fontSize:12,fontWeight:active?700:500,fontFamily:"'Inter',sans-serif",transition:'all .15s',letterSpacing:.5});
+  const tabBtn=(active,col)=>({flex:1,padding:'11px 6px',background:'none',border:'none',borderBottom:'2.5px solid '+(active?(col||T.a):'transparent'),color:active?(col||T.text):T.muted,cursor:'pointer',fontSize:12,fontWeight:active?700:500,fontFamily:"'Inter',sans-serif",transition:'all .15s'});
+  const dot=()=>({width:7,height:7,borderRadius:'50%',background:T.a,animation:'livePulse 2s infinite',display:'inline-block'});
 
-  // ── PANTALLAS ────────────────────────────────────────────────────────────
-
-  function ThemePicker(){return(
-    <div style={{display:'flex',justifyContent:'center',gap:8,padding:'8px 12px 6px',background:T.surf,borderBottom:'1px solid '+T.border,flexShrink:0}}>
-      <span style={{...rj(11,500,T.muted),letterSpacing:2,textTransform:'uppercase',alignSelf:'center'}}>Tema:</span>
-      {Object.entries(THEMES).map(([k,t])=>(
-        <button key={k} onClick={()=>setTk(k)} style={{display:'flex',alignItems:'center',gap:5,padding:'5px 11px',borderRadius:20,border:'1.5px solid '+(tk===k?t.a:T.border),background:tk===k?t.a+'22':'transparent',cursor:'pointer',transition:'all .2s'}}>
-          <div style={{width:9,height:9,borderRadius:'50%',background:t.a,boxShadow:tk===k?'0 0 7px '+t.a:''}}/> 
-          <span style={{...rj(11,tk===k?700:500,tk===k?t.a:T.muted),letterSpacing:1}}>{t.name}</span>
-        </button>
-      ))}
-    </div>
-  );}
+  // ── PANTALLAS ──────────────────────────────────────────────────────────
 
   function Registro(){return(
-    <div style={{flex:1,overflowY:'auto',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:24,background:T.bg}}>
-      <div style={{textAlign:'center',marginBottom:32}}>
-        <div style={{fontSize:72,marginBottom:8,filter:'drop-shadow(0 0 24px '+T.a+'88)'}}>🏍</div>
-        <div style={{...rj(36,700,T.a),letterSpacing:6,lineHeight:1}}>RODADA</div>
-        <div style={{fontSize:15,color:T.muted,marginTop:6}}>Córdoba · Veracruz · México</div>
+    <div style={{flex:1,display:'flex',flexDirection:'column',background:T.bg,overflow:'hidden'}}>
+      <div style={{height:'42%',background:'linear-gradient(160deg,#0f2010 0%,#1a3a1a 30%,#0d1a0d 70%,#050a05 100%)',position:'relative',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+        <div style={{fontSize:60,marginBottom:8,filter:'drop-shadow(0 4px 16px rgba(0,0,0,.6))'}}>🏍</div>
+        <div style={{fontFamily:"'Inter',sans-serif",fontSize:28,fontWeight:900,color:'#fff',letterSpacing:4}}>RODADA</div>
+        <div style={{fontSize:13,color:'rgba(255,255,255,.5)',marginTop:4,letterSpacing:2}}>CÓRDOBA · VERACRUZ</div>
+        <div style={{position:'absolute',bottom:0,left:0,right:0,height:24,background:'linear-gradient(to top,'+T.bg+',transparent)'}}/>
       </div>
-      <div style={{width:'100%',maxWidth:380}}>
-        <div style={card({borderColor:T.a+'44',background:'linear-gradient(135deg,'+T.a+'10,'+T.card+')'})}>
-          <div style={{...rj(16,700,T.a),marginBottom:4}}>👋 Únete al grupo</div>
-          <div style={{fontSize:14,color:T.muted,marginBottom:20,lineHeight:1.6}}>
-            <strong style={{color:T.b}}>{GRUPO_CORDOBA.nombre}</strong><br/>
-            {GRUPO_CORDOBA.miembros} moteros registrados · {GRUPO_CORDOBA.ciudad}
+      <div style={{flex:1,overflowY:'auto',padding:'20px 20px 32px',background:T.bg}}>
+        <div style={card({boxShadow:T.shadowMd})}>
+          <div style={{fontSize:20,fontWeight:800,color:T.text,marginBottom:4}}>Únete al grupo</div>
+          <div style={{fontSize:14,color:T.muted,marginBottom:18,lineHeight:1.6}}>
+            <span style={{fontWeight:700,color:T.a}}>{GRUPO_CORDOBA.nombre}</span><br/>
+            {GRUPO_CORDOBA.miembros} moteros · Córdoba, Veracruz
           </div>
-          <div style={{marginBottom:14}}>
-            <label style={lbl()}>Tu nombre o apodo *</label>
-            <input style={inp()} placeholder="Ej: El Coyote, María, Juan..." value={regForm.nombre} onChange={e=>setRegForm(f=>({...f,nombre:e.target.value}))}/>
-          </div>
-          <div style={{marginBottom:14}}>
-            <label style={lbl()}>Tu moto *</label>
-            <input style={inp()} placeholder="Ej: Honda CB500F 2022" value={regForm.moto} onChange={e=>setRegForm(f=>({...f,moto:e.target.value}))}/>
-          </div>
-          <div style={{marginBottom:14}}>
-            <label style={lbl()}>Ciudad</label>
-            <input style={inp()} value={regForm.ciudad} onChange={e=>setRegForm(f=>({...f,ciudad:e.target.value}))}/>
-          </div>
-          <div style={{marginBottom:20}}>
-            <label style={lbl()}>WhatsApp (opcional, para el grupo)</label>
-            <input style={inp()} placeholder="271-XXX-XXXX" type="tel" value={regForm.tel} onChange={e=>setRegForm(f=>({...f,tel:e.target.value}))}/>
-          </div>
-          <button onClick={guardarRegistro} disabled={!regForm.nombre.trim()||!regForm.moto.trim()} style={{...btnP(),opacity:(!regForm.nombre.trim()||!regForm.moto.trim())?0.4:1,fontSize:16}}>
-            🏍 Unirme a Rodadores de Córdoba VER
+          <div style={{marginBottom:12}}><label style={lbl()}>Nombre o apodo *</label><input style={inp()} placeholder="Ej: El Coyote, María..." value={regForm.nombre} onChange={e=>setRegForm(f=>({...f,nombre:e.target.value}))}/></div>
+          <div style={{marginBottom:12}}><label style={lbl()}>Tu moto *</label><input style={inp()} placeholder="Ej: Honda CB500F 2022" value={regForm.moto} onChange={e=>setRegForm(f=>({...f,moto:e.target.value}))}/></div>
+          <div style={{marginBottom:12}}><label style={lbl()}>Ciudad</label><input style={inp()} value={regForm.ciudad} onChange={e=>setRegForm(f=>({...f,ciudad:e.target.value}))}/></div>
+          <div style={{marginBottom:18}}><label style={lbl()}>WhatsApp (opcional)</label><input style={inp()} placeholder="271-XXX-XXXX" type="tel" value={regForm.tel} onChange={e=>setRegForm(f=>({...f,tel:e.target.value}))}/></div>
+          <button onClick={guardarRegistro} disabled={!regForm.nombre.trim()||!regForm.moto.trim()} style={{...btnSolid(),opacity:(!regForm.nombre.trim()||!regForm.moto.trim())?0.35:1,fontSize:15}}>
+            Registrarme · Unirme al grupo
           </button>
-          <div style={{fontSize:12,color:T.muted,textAlign:'center',marginTop:12,lineHeight:1.6}}>
-            Gratis · Tus datos solo se guardan en este dispositivo · Sin correo
-          </div>
+          <div style={{fontSize:12,color:T.label,textAlign:'center',marginTop:12,lineHeight:1.6}}>Gratis · Solo se guarda en tu dispositivo</div>
         </div>
       </div>
     </div>
   );}
 
   function Home(){return(
-    <div style={{flex:1,overflowY:'auto',padding:16}}>
-      <div style={card({background:'linear-gradient(135deg,'+T.a+'18 0%,'+T.bg+' 100%)',borderColor:T.a+'55'})}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
-          <div>
-            <div style={{fontSize:15,color:T.a,fontWeight:600,letterSpacing:2,textTransform:'uppercase',marginBottom:4}}>
-              Hola, {usuario?.nombre||'Motero'} 👋
-            </div>
-            <div style={{...rj(32,700,T.a),letterSpacing:4,lineHeight:1}}>RODADA</div>
-            <div style={{fontSize:14,color:T.muted,marginTop:5}}>{GRUPO_CORDOBA.nombre}</div>
-          </div>
-          <div style={{fontSize:44,animation:'ride 2s infinite',filter:'drop-shadow(0 6px 16px '+T.a+'44)'}}>🏍</div>
+    <div style={{flex:1,overflowY:'auto',background:T.bg}}>
+      <div style={{background:T.surf,padding:'16px 18px 20px',borderBottom:'1px solid '+T.border,marginBottom:14}}>
+        <div style={{fontSize:14,color:T.muted,marginBottom:3}}>Hola, <strong style={{color:T.text}}>{usuario?.nombre||'Motero'} 👋</strong></div>
+        <div style={{fontSize:24,fontWeight:900,color:T.text,lineHeight:1.1,marginBottom:6}}>{GRUPO_CORDOBA.nombre}</div>
+        <div style={{display:'flex',alignItems:'center',gap:8}}>
+          <div style={dot()}/><span style={{fontSize:13,color:T.muted}}>28 miembros · Córdoba, Veracruz</span>
+          <span style={{marginLeft:'auto',fontSize:13,fontWeight:700,color:T.a,cursor:'pointer'}} onClick={()=>setScr('grupo')}>Ver grupo ›</span>
         </div>
-        {usuario?.moto&&<div style={{marginTop:12,padding:'10px 14px',background:T.aG,borderRadius:10,fontSize:14,display:'flex',alignItems:'center',gap:8}}>
-          <span>🏍</span><span style={{color:T.text}}>{usuario.moto} · <span style={{color:T.a,fontWeight:700}}>{autonomia}km autonomía</span></span>
+        {usuario?.moto&&<div style={{marginTop:12,padding:'10px 14px',background:T.aD,border:'1px solid '+T.aB,borderRadius:10,fontSize:14,display:'flex',alignItems:'center',gap:8}}>
+          <span>🏍</span><span style={{color:T.textSec}}>{usuario.moto} · <strong style={{color:T.a}}>{autonomia}km autonomía</strong></span>
         </div>}
-        {!usuario?.moto&&<button style={{...btnP(),marginTop:12,fontSize:14}} onClick={()=>setScr('moto')}>🤖 Registra tu moto con IA</button>}
+        {!usuario?.moto&&<button style={{...btnSolid(T.a),marginTop:12,fontSize:14}} onClick={()=>setScr('moto')}>🤖 Registrar mi moto con IA</button>}
       </div>
-
-      <div style={{padding:'8px 12px',background:T.b+'15',border:'1px solid '+T.b+'33',borderRadius:12,marginBottom:14,display:'flex',alignItems:'center',gap:10}}>
-        <div style={dot()}/>
-        <div style={{flex:1}}>
-          <span style={{fontSize:14,fontWeight:600,color:T.b}}>{GRUPO_CORDOBA.nombre}</span>
-          <span style={{fontSize:13,color:T.muted}}> · {GRUPO_CORDOBA.miembros} miembros</span>
+      <div style={{padding:'0 16px'}}>
+        <div style={sec()}>Acciones rápidas</div>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
+          {[{ico:'🗺️',lbl:'Planear Ruta',s:'ruta',col:T.a},{ico:'🧭',lbl:'Navegar GPS',s:'navega',col:T.b},{ico:'📡',lbl:'Grupo + Rodadas',s:'grupo',col:'#8B5CF6'},{ico:'📍',lbl:'Spots Moteros',s:'navega',col:'#F59E0B'}].map(a=>(
+            <button key={a.lbl} onClick={()=>setScr(a.s)} style={{background:T.card,border:'1px solid '+T.border,borderRadius:16,padding:'18px 10px',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:8,boxShadow:T.shadow}}>
+              <span style={{fontSize:28}}>{a.ico}</span>
+              <span style={{fontSize:12,fontWeight:700,color:a.col,letterSpacing:.5,textTransform:'uppercase'}}>{a.lbl}</span>
+            </button>
+          ))}
         </div>
-        <button onClick={()=>setScr('grupo')} style={{background:T.b,border:'none',borderRadius:8,padding:'6px 12px',fontSize:13,fontWeight:700,color:'#040804',cursor:'pointer'}}>Ver</button>
-      </div>
-
-      <div style={sec()}>Acciones rápidas</div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:16}}>
-        {[{ico:'🗺',lbl:'Planear Ruta',s:'ruta',c:T.a},{ico:'🧭',lbl:'Navegar GPS',s:'navega',c:T.c},{ico:'📡',lbl:'Grupo + Alertas',s:'grupo',c:T.b},{ico:'📍',lbl:'Spots Moteros',s:'navega',c:'#A78BFA'}].map(a=>(
-          <button key={a.lbl} onClick={()=>setScr(a.s)} style={{background:T.card,border:'1px solid '+T.border,borderRadius:14,padding:'20px 8px',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:8}}>
-            <span style={{fontSize:30}}>{a.ico}</span>
-            <span style={{...rj(12,700,a.c),letterSpacing:1.5,textTransform:'uppercase'}}>{a.lbl}</span>
-          </button>
-        ))}
-      </div>
-      <div style={sec()}>Mis estadísticas</div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:14}}>
-        {[{v:(4827+diario.reduce((s,d)=>s+(d.km||0),0)).toLocaleString(),u:'km',l:'🛣 Total recorrido',c:T.a},{v:String(23+diario.length),u:'',l:'🏍 Rodadas',c:T.b},{v:'$3,840',u:'',l:'💸 Ahorrado c/IAVE',c:T.c},{v:'18',u:'L',l:'⛽ Últ. consumo',c:T.yellow}].map((s,i)=>(
-          <div key={i} style={sb(s.c)}><div style={{...rj(26,700,s.c)}}>{s.v}<span style={{fontSize:13,color:T.muted}}>{s.u}</span></div><div style={{fontSize:13,color:T.muted,marginTop:3}}>{s.l}</div></div>
-        ))}
-      </div>
-      {diario.length>0&&<div style={card({borderColor:T.b+'44'})}>
-        <div style={sec()}>Últimas rodadas</div>
-        {diario.slice(0,3).map((d,i)=><div key={i} style={{display:'flex',justifyContent:'space-between',padding:'8px 0',borderBottom:'1px solid '+T.border}}>
-          <div><div style={{fontSize:14,fontWeight:600,color:T.text}}>{d.ruta}</div><div style={{fontSize:12,color:T.muted}}>{d.fecha} · {d.tiempo}</div></div>
-          <div style={{textAlign:'right'}}><div style={{...rj(15,700,T.a)}}>{d.km}km</div><div style={{fontSize:12,color:T.muted}}>{d.costo}</div></div>
-        </div>)}
-      </div>}
-      <div style={card({borderColor:T.red+'55',background:T.redD,cursor:'pointer'})} onClick={()=>setScr('mas')}>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <span style={{fontSize:24}}>⚠️</span>
-          <div style={{flex:1}}><div style={{fontSize:15,fontWeight:600,color:T.red}}>Mantenimiento pendiente</div><div style={{fontSize:13,color:T.muted,marginTop:2}}>{specs?'Aceite · '+specs.aceite_tipo:'Cambio de aceite'} · ~200 km</div></div>
-          <span style={{color:T.muted,fontSize:20}}>›</span>
+        <div style={sec()}>Mis estadísticas</div>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:14}}>
+          {[{v:(4827+diario.reduce((s,d)=>s+(d.km||0),0)).toLocaleString(),u:'km',l:'🛣 Total recorrido',c:T.a},{v:String(23+diario.length),u:'',l:'🏍 Rodadas',c:T.b},{v:'$3,840',u:'',l:'💸 Ahorrado',c:'#8B5CF6'},{v:'18',u:'L',l:'⛽ Último consumo',c:T.yellow}].map((s,i)=>(
+            <div key={i} style={sb(s.c)}><div style={{fontSize:26,fontWeight:900,color:s.c,lineHeight:1}}>{s.v}<span style={{fontSize:13,color:T.muted}}>{s.u}</span></div><div style={{fontSize:13,color:T.textSec,marginTop:4}}>{s.l}</div></div>
+          ))}
+        </div>
+        {diario.length>0&&<div style={cardFlat()}>
+          <div style={sec()}>Últimas rodadas</div>
+          {diario.slice(0,3).map((d,i)=><div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'9px 0',borderBottom:'1px solid '+T.border}}>
+            <div><div style={{fontSize:14,fontWeight:600,color:T.text}}>{d.ruta}</div><div style={{fontSize:12,color:T.muted,marginTop:2}}>{d.fecha} · {d.tiempo}</div></div>
+            <div style={{textAlign:'right'}}><div style={{fontSize:16,fontWeight:800,color:T.a}}>{d.km}km</div><div style={{fontSize:12,color:T.muted}}>{d.costo}</div></div>
+          </div>)}
+        </div>}
+        <div style={{background:T.redD,border:'1px solid '+T.redB,borderRadius:14,padding:'13px 16px',marginBottom:14,cursor:'pointer',display:'flex',alignItems:'center',gap:10}} onClick={()=>setScr('mas')}>
+          <div style={{width:3,height:36,background:T.red,borderRadius:2,flexShrink:0}}/>
+          <div style={{flex:1}}><div style={{fontSize:15,fontWeight:700,color:T.red}}>Mantenimiento pendiente</div><div style={{fontSize:13,color:T.muted,marginTop:2}}>{specs?'Aceite · '+specs.aceite_tipo:'Cambio de aceite'} · ~200 km</div></div>
+          <span style={{fontSize:18,color:T.muted}}>›</span>
         </div>
       </div>
     </div>
   );}
 
   function MiMoto(){
-    const marcaData=MARCAS_DB[moto.marca];
-    const brandColor=marcaData?.color||T.a;
-    async function seleccionarModelo(marca,modelo){
-      setMoto(m=>({...m,marca,modelo}));setErrMoto('');setSpecs(null);
-      const key=marca+' '+modelo;
-      if(SPECS_LOCAL[key]){const s=SPECS_LOCAL[key];setSpecs(s);setMoto(m=>({...m,rend:String(s.rendimiento_kmL),tanque:String(s.tanque_litros)}));return;}
-      setBuscando(true);
-      try{const s=await fetchMotoSpecs(marca,modelo,moto.year);setSpecs(s);setMoto(m=>({...m,rend:String(s.rendimiento_kmL||m.rend),tanque:String(s.tanque_litros||m.tanque)}));}
-      catch(e){setErrMoto('No encontré specs de '+marca+' '+modelo+'. Ingresa manualmente.');}
-      finally{setBuscando(false);}
+    const marcaData=MARCAS_DB[moto.marca];const bCol=marcaData?.color||T.a;
+    async function selMod(marca,modelo){setMoto(m=>({...m,marca,modelo}));setErrMoto('');setSpecs(null);const k=marca+' '+modelo;if(SPECS_LOCAL[k]){const s=SPECS_LOCAL[k];setSpecs(s);setMoto(m=>({...m,rend:String(s.rendimiento_kmL),tanque:String(s.tanque_litros)}));return;}setBuscando(true);try{const s=await fetchMotoSpecs(marca,modelo,moto.year);setSpecs(s);setMoto(m=>({...m,rend:String(s.rendimiento_kmL||m.rend),tanque:String(s.tanque_litros||m.tanque)}));}catch(e){setErrMoto('No encontré specs de '+marca+' '+modelo+'.');}finally{setBuscando(false);}
     }
     return(
-    <div style={{flex:1,overflowY:'auto',padding:16}}>
-      <div style={card()}>
-        <div style={sec()}>1 · Selecciona tu marca</div>
+    <div style={{flex:1,overflowY:'auto',padding:16,background:T.bg}}>
+      <div style={card()}><div style={sec()}>1 · Selecciona tu marca</div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8}}>
-          {Object.entries(MARCAS_DB).map(([nombre,data])=>{const sel=moto.marca===nombre;return(
-            <button key={nombre} onClick={()=>setMoto(m=>({...m,marca:nombre,modelo:''}))} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:5,padding:'10px 6px',background:sel?data.color+'20':'transparent',border:'1.5px solid '+(sel?data.color:T.border),borderRadius:12,cursor:'pointer',transition:'all .15s'}}>
-              <div style={{width:10,height:10,borderRadius:'50%',background:data.color,boxShadow:sel?'0 0 8px '+data.color:''}}/>
-              <span style={{fontSize:11,fontWeight:sel?700:400,color:sel?data.color:T.muted,textAlign:'center',lineHeight:1.3}}>{nombre}</span>
-            </button>
-          );})}
+          {Object.entries(MARCAS_DB).map(([n,d])=>{const sel=moto.marca===n;return(<button key={n} onClick={()=>setMoto(m=>({...m,marca:n,modelo:''}))} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:5,padding:'10px 6px',background:sel?d.color+'12':'#F9FAFB',border:'1.5px solid '+(sel?d.color:T.border),borderRadius:12,cursor:'pointer',transition:'all .15s'}}><div style={{width:10,height:10,borderRadius:'50%',background:d.color}}/><span style={{fontSize:11,fontWeight:sel?700:500,color:sel?d.color:T.muted,textAlign:'center',lineHeight:1.3}}>{n}</span></button>);})}
         </div>
       </div>
-      {moto.marca&&marcaData&&<div style={card({borderColor:brandColor+'55'})}>
-        <div style={sec()}>2 · Modelo</div>
+      {moto.marca&&marcaData&&<div style={card({borderTop:'3px solid '+bCol})}>
+        <div style={sec()}>2 · Modelo de {moto.marca}</div>
         <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
-          {marcaData.models.map(m=>{const sel=moto.modelo===m;return(
-            <button key={m} onClick={()=>seleccionarModelo(moto.marca,m)} style={{padding:'9px 16px',background:sel?brandColor+'25':'transparent',border:'1.5px solid '+(sel?brandColor:T.border),borderRadius:20,color:sel?brandColor:T.muted,cursor:'pointer',fontSize:14,fontWeight:sel?700:400}}>
-              {m}{sel&&' ✓'}
-            </button>
-          );})}
+          {marcaData.models.map(m=>{const sel=moto.modelo===m;return(<button key={m} onClick={()=>selMod(moto.marca,m)} style={{padding:'9px 16px',background:sel?bCol+'15':'#F9FAFB',border:'1.5px solid '+(sel?bCol:T.border),borderRadius:20,color:sel?bCol:T.textSec,cursor:'pointer',fontSize:14,fontWeight:sel?700:400}}>{m}{sel&&' ✓'}</button>);})}
         </div>
-        {buscando&&<div style={{display:'flex',alignItems:'center',gap:10,padding:'12px 0',color:T.a}}>
-          <div style={{width:18,height:18,border:'2px solid '+T.a,borderTopColor:'transparent',borderRadius:'50%',animation:'spin .8s linear infinite'}}/>
-          <span style={{fontSize:14}}>Buscando specs de {moto.marca} {moto.modelo}...</span>
-        </div>}
-        {errMoto&&<div style={{padding:'10px 13px',background:T.redD,border:'1px solid '+T.red+'44',borderRadius:8,fontSize:13,color:T.red,marginTop:8}}>⚠️ {errMoto}</div>}
+        {buscando&&<div style={{display:'flex',alignItems:'center',gap:10,padding:'12px 0',color:T.a}}><div style={{width:18,height:18,border:'2px solid '+T.a,borderTopColor:'transparent',borderRadius:'50%',animation:'spin .8s linear infinite'}}/><span style={{fontSize:14}}>Buscando specs de {moto.marca} {moto.modelo}...</span></div>}
+        {errMoto&&<div style={{padding:'10px 13px',background:T.redD,border:'1px solid '+T.redB,borderRadius:8,fontSize:13,color:T.red,marginTop:8}}>⚠️ {errMoto}</div>}
       </div>}
-      {specs&&!buscando&&<div style={card({borderColor:brandColor+'44'})}>
-        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:12}}>
-          <span>✅</span><span style={{...rj(15,700,brandColor)}}>{moto.marca} {moto.modelo}</span>
-          {SPECS_LOCAL[moto.marca+' '+moto.modelo]?<span style={tg(T.b)}>Instantáneo</span>:<span style={tg(T.a)}>IA</span>}
-        </div>
+      {specs&&!buscando&&<div style={card({borderTop:'3px solid '+bCol})}>
+        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:12}}><span>✅</span><span style={{fontSize:15,fontWeight:700,color:bCol}}>{moto.marca} {moto.modelo}</span>{SPECS_LOCAL[moto.marca+' '+moto.modelo]?<span style={tg(T.a)}>Instantáneo</span>:<span style={tg(T.b)}>IA</span>}</div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:12}}>
-          {[{l:'Tipo',v:specs.tipo,c:brandColor},{l:'Potencia',v:specs.potencia_hp+'HP',c:T.a},{l:'Torque',v:specs.torque_nm+'Nm',c:T.b},{l:'P.del.',v:specs.presion_delantera_bar+'bar',c:T.c},{l:'P.tra.',v:specs.presion_trasera_bar+'bar',c:T.c},{l:'Aceite',v:specs.aceite_tipo.split(' ')[0],c:T.yellow}].map((s,i)=>(
-            <div key={i} style={{background:s.c+'12',borderRadius:10,padding:'9px 11px'}}><div style={{...rj(13,700,s.c),lineHeight:1.2}}>{s.v}</div><div style={{fontSize:11,color:T.muted,marginTop:3}}>{s.l}</div></div>
+          {[{l:'Tipo',v:specs.tipo,c:bCol},{l:'Potencia',v:specs.potencia_hp+'HP',c:T.a},{l:'Torque',v:specs.torque_nm+'Nm',c:T.b},{l:'P.del.',v:specs.presion_delantera_bar+'bar',c:'#8B5CF6'},{l:'P.tra.',v:specs.presion_trasera_bar+'bar',c:'#8B5CF6'},{l:'Aceite',v:specs.aceite_tipo.split(' ')[0],c:T.yellow}].map((s,i)=>(
+            <div key={i} style={{background:'#F9FAFB',border:'1px solid '+T.border,borderRadius:10,padding:'9px 11px'}}><div style={{fontSize:13,fontWeight:700,color:s.c,lineHeight:1.2}}>{s.v}</div><div style={{fontSize:10,color:T.label,marginTop:3}}>{s.l}</div></div>
           ))}
         </div>
-        <div style={{padding:'9px 13px',background:T.aD,borderRadius:9,fontSize:13,color:T.a,lineHeight:1.6}}>💡 {specs.consejo_mx}</div>
+        <div style={{padding:'10px 14px',background:T.aD,border:'1px solid '+T.aB,borderRadius:10,fontSize:13,color:T.textSec,lineHeight:1.6}}>💡 {specs.consejo_mx}</div>
       </div>}
-      {moto.marca&&<div style={card()}>
-        <div style={sec()}>3 · Año y combustible</div>
-        <div style={{display:'flex',gap:10,marginBottom:14}}>
-          <div style={{flex:1}}><label style={lbl()}>Año</label><input type="number" style={inp()} value={moto.year} onChange={e=>setMoto(m=>({...m,year:e.target.value}))}/></div>
-          <div style={{flex:1}}><label style={lbl()}>cc</label><input type="number" style={inp()} placeholder="ej. 500" value={moto.cc} onChange={e=>setMoto(m=>({...m,cc:e.target.value}))}/></div>
-        </div>
-        <label style={lbl()}>Combustible</label>
-        <div style={{display:'flex',gap:8}}>{['magna','premium'].map(f=><button key={f} onClick={()=>setMoto(m=>({...m,fuel:f}))} style={pill(moto.fuel===f)}>⛽ {f.charAt(0).toUpperCase()+f.slice(1)}</button>)}</div>
+      {moto.marca&&<div style={card()}><div style={sec()}>3 · Año y combustible</div>
+        <div style={{display:'flex',gap:10,marginBottom:14}}><div style={{flex:1}}><label style={lbl()}>Año</label><input type="number" style={inp()} value={moto.year} onChange={e=>setMoto(m=>({...m,year:e.target.value}))}/></div><div style={{flex:1}}><label style={lbl()}>cc</label><input type="number" style={inp()} placeholder="500" value={moto.cc} onChange={e=>setMoto(m=>({...m,cc:e.target.value}))}/></div></div>
+        <label style={lbl()}>Combustible</label><div style={{display:'flex',gap:8}}>{['magna','premium'].map(f=><button key={f} onClick={()=>setMoto(m=>({...m,fuel:f}))} style={pill(moto.fuel===f)}>⛽ {f.charAt(0).toUpperCase()+f.slice(1)}</button>)}</div>
       </div>}
-      {specs&&<div style={card()}>
-        <div style={sec()}>Ajuste fino</div>
-        <div style={{display:'flex',gap:10}}>
-          <div style={{flex:1}}><label style={lbl()}>Tanque (L) ✓</label><input type="number" style={inpHL()} value={moto.tanque} onChange={e=>setMoto(m=>({...m,tanque:e.target.value}))}/></div>
-          <div style={{flex:1}}><label style={lbl()}>km/L ✓</label><input type="number" style={inpHL()} value={moto.rend} onChange={e=>setMoto(m=>({...m,rend:e.target.value}))}/></div>
-        </div>
-      </div>}
-      {moto.modelo&&<div style={card({borderColor:T.b+'44',textAlign:'center',padding:'22px 16px'})}>
-        <div style={sec({marginBottom:4})}>Tu autonomía estimada</div>
-        <div style={{...rj(58,700,brandColor),lineHeight:1}}>{autonomia}</div>
-        <div style={{fontSize:15,color:T.muted,marginTop:4}}>km por tanque lleno</div>
-        <div style={{marginTop:12,padding:'9px 13px',background:T.aD,borderRadius:9,fontSize:13,color:T.a}}>⛽ Recarga antes del km {Math.round(autonomia*.85)} en ruta larga</div>
-      </div>}
+      {specs&&<div style={card()}><div style={sec()}>Ajuste fino</div><div style={{display:'flex',gap:10}}><div style={{flex:1}}><label style={lbl()}>Tanque (L) ✓</label><input type="number" style={inpHL()} value={moto.tanque} onChange={e=>setMoto(m=>({...m,tanque:e.target.value}))}/></div><div style={{flex:1}}><label style={lbl()}>km/L ✓</label><input type="number" style={inpHL()} value={moto.rend} onChange={e=>setMoto(m=>({...m,rend:e.target.value}))}/></div></div></div>}
+      {moto.modelo&&<div style={{background:T.aD,border:'1px solid '+T.aB,borderRadius:16,textAlign:'center',padding:'22px 16px',marginBottom:14}}><div style={sec({marginBottom:4})}>Tu autonomía estimada</div><div style={{fontSize:56,fontWeight:900,color:T.a,lineHeight:1}}>{autonomia}</div><div style={{fontSize:15,color:T.textSec,marginTop:4}}>km por tanque lleno</div><div style={{marginTop:12,fontSize:13,color:T.textSec}}>⛽ Recarga antes del km <strong style={{color:T.a}}>{Math.round(autonomia*.85)}</strong> en ruta larga</div></div>}
     </div>
   );}
 
   function Ruta(){
-    const MODOS={
-      autopista:{icon:'🛣',label:'Autopista',color:T.a,rutas:RUTAS_AUTOPISTA,desc:'Cuotas + rápidas'},
-      carretera:{icon:'🌄',label:'Escénica',color:T.b,rutas:RUTAS_CARRETERA,desc:'Libres + paisaje'},
-      curvas:{icon:'🔄',label:'Curvas',color:'#FB923C',rutas:RUTAS_CURVAS,desc:'¡Las más divertidas!'},
-      sct:{icon:'🏛',label:'SCT',color:T.c,rutas:[]},
-    };
-    const modo=rutaMode;const setModo=setRutaMode;
-    const modoActual=MODOS[modo];
-    return(
-    <div style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden'}}>
+    const MODOS={autopista:{icon:'🛣',label:'Autopista',color:T.a,rutas:RUTAS_AUTOPISTA,desc:'Con cuotas · más rápidas'},carretera:{icon:'🌄',label:'Escénica',color:T.b,rutas:RUTAS_CARRETERA,desc:'Libres · paisaje natural'},curvas:{icon:'🔄',label:'Curvas',color:'#F59E0B',rutas:RUTAS_CURVAS,desc:'Las más divertidas'},sct:{icon:'🏛',label:'SCT',color:'#8B5CF6',rutas:[]}};
+    const modo=rutaMode;const mA=MODOS[modo];
+    return(<div style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden',background:T.bg}}>
       <div style={{display:'flex',background:T.surf,borderBottom:'1px solid '+T.border,flexShrink:0}}>
-        {Object.entries(MODOS).map(([k,m])=>(
-          <button key={k} onClick={()=>setModo(k)} style={{flex:1,padding:'10px 4px',background:'none',border:'none',borderBottom:'2.5px solid '+(modo===k?m.color:'transparent'),color:modo===k?m.color:T.muted,cursor:'pointer',transition:'all .15s'}}>
-            <div style={{fontSize:18}}>{m.icon}</div>
-            <div style={{fontSize:10,fontWeight:modo===k?700:400,fontFamily:"'Barlow',sans-serif",marginTop:2}}>{m.label}</div>
-          </button>
-        ))}
+        {Object.entries(MODOS).map(([k,m])=>(<button key={k} onClick={()=>setRutaMode(k)} style={tabTop(modo===k)}>{m.icon} {m.label}</button>))}
       </div>
-      {modo==='sct'&&<div style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden'}}>
-        <div style={{padding:'10px 14px',background:T.aD,borderBottom:'1px solid '+T.border,flexShrink:0,display:'flex',alignItems:'center',gap:8}}>
-          <span style={{fontSize:15}}>🏛</span>
-          <div><div style={{fontSize:14,color:T.a,fontWeight:600}}>Rutas Punto a Punto · SCT / CAPUFE</div><div style={{fontSize:12,color:T.muted}}>Selecciona "Motocicleta" como tipo de vehículo</div></div>
-        </div>
-        <iframe src="https://app.sct.gob.mx/sibuac_internet/ControllerUI?action=cmdEscogeRuta" style={{flex:1,border:'none',width:'100%',minHeight:0}} title="SCT Rutas"/>
-      </div>}
+      {modo==='sct'&&<div style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden'}}><div style={{padding:'10px 16px',background:T.surf,borderBottom:'1px solid '+T.border,flexShrink:0,display:'flex',alignItems:'center',gap:8}}><span>🏛</span><div><div style={{fontSize:14,color:T.text,fontWeight:700}}>Rutas Punto a Punto · SCT / CAPUFE</div><div style={{fontSize:12,color:T.muted}}>Selecciona "Motocicleta" como tipo de vehículo</div></div></div><iframe src="https://app.sct.gob.mx/sibuac_internet/ControllerUI?action=cmdEscogeRuta" style={{flex:1,border:'none',width:'100%',minHeight:0}} title="SCT Rutas"/></div>}
       {modo!=='sct'&&<div style={{flex:1,overflowY:'auto',padding:16}}>
-        <div style={{padding:'10px 14px',background:modoActual.color+'15',border:'1px solid '+modoActual.color+'33',borderRadius:11,marginBottom:14,fontSize:14,color:modoActual.color}}>
-          {modoActual.icon} <strong>{modoActual.label}</strong>: {modoActual.desc}
+        <div style={{padding:'10px 14px',background:mA.color+'12',border:'1px solid '+mA.color+'30',borderRadius:10,marginBottom:14,fontSize:13,color:mA.color}}>{mA.icon} <strong>{mA.label}</strong>: {mA.desc}</div>
+        <div style={cardFlat()}>
+          {mA.rutas.map(r=>(<button key={r.id} onClick={()=>setRuta(r)} style={{display:'flex',alignItems:'center',width:'100%',background:ruta.id===r.id?T.aD:'transparent',border:'1.5px solid '+(ruta.id===r.id?T.a:T.border),borderRadius:12,padding:'12px 14px',cursor:'pointer',marginBottom:8,gap:10,transition:'all .15s',textAlign:'left',fontFamily:"'Inter',sans-serif'"}}>
+            <span style={{fontSize:18}}>🏍</span>
+            <div style={{flex:1}}>
+              <div style={{fontSize:14,fontWeight:600,color:ruta.id===r.id?T.a:T.text}}>{r.label}</div>
+              <div style={{fontSize:12,color:T.muted,marginTop:3}}>{r.km} km · {(r.casetas||[]).length} caseta{(r.casetas||[]).length!==1?'s':''} · {htime(r.km/(r.spd||70))}</div>
+              {r.nota&&<div style={{fontSize:11,color:mA.color,marginTop:3,fontStyle:'italic'}}>{r.nota.slice(0,50)}</div>}
+            </div>
+            {ruta.id===r.id&&<span style={{color:T.a,fontSize:18,fontWeight:700}}>✓</span>}
+          </button>))}
         </div>
-        <div style={card()}>
-          {modoActual.rutas.map(r=>(
-            <button key={r.id} onClick={()=>setRuta(r)} style={{display:'flex',alignItems:'center',width:'100%',background:ruta.id===r.id?T.aD:'transparent',border:'1px solid '+(ruta.id===r.id?T.a:T.border),borderRadius:11,padding:'12px 14px',cursor:'pointer',marginBottom:8,gap:10,transition:'all .15s',textAlign:'left',fontFamily:"'Barlow',sans-serif"}}>
-              <span style={{fontSize:18}}>🏍</span>
-              <div style={{flex:1}}>
-                <div style={{fontSize:14,fontWeight:600,color:ruta.id===r.id?T.a:T.text}}>{r.label}</div>
-                <div style={{fontSize:12,color:T.muted,marginTop:3}}>{r.km} km · {(r.casetas||[]).length} caseta{(r.casetas||[]).length!==1?'s':''} · {htime(r.km/(r.spd||70))}</div>
-                {r.nota&&<div style={{fontSize:11,color:modoActual.color,marginTop:3}}>{r.nota.slice(0,45)}...</div>}
-              </div>
-              {ruta.id===r.id&&<span style={{color:T.a,fontSize:18}}>✓</span>}
-            </button>
-          ))}
-        </div>
-        {sinAlc&&<div style={card({borderColor:T.red+'55',background:T.redD})}>
-          <div style={{fontSize:14,color:T.red,lineHeight:1.7}}>⛽ <strong>Necesitas parar.</strong> Autonomía: <span style={{...rj(15,700,T.red)}}>{autonomia}km</span> · Ruta: <span style={{...rj(15,700,T.red)}}>{ruta.km}km</span>. Carga en km {Math.round(autonomia*.85)}.</div>
-        </div>}
-        <div style={card({borderColor:T.a+'44',background:'linear-gradient(135deg,'+T.a+'10,'+T.card+')'})}>
+        {sinAlc&&<div style={{background:T.redD,border:'1px solid '+T.redB,borderRadius:12,padding:'12px 15px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}><div style={{width:3,height:30,background:T.red,borderRadius:2,flexShrink:0}}/><div style={{fontSize:14,color:T.red}}>⛽ <strong>Necesitas parar.</strong> Autonomía {autonomia}km · Ruta {ruta.km}km. Carga en km {Math.round(autonomia*.85)}.</div></div>}
+        <div style={card({boxShadow:T.shadowMd})}>
           <div style={sec()}>Resumen del viaje</div>
           <div style={{textAlign:'center',padding:'14px 0 18px',borderBottom:'1px solid '+T.border,marginBottom:16}}>
-            <div style={{fontSize:11,color:T.muted,letterSpacing:2,textTransform:'uppercase',marginBottom:6}}>Costo total estimado</div>
-            <div style={{...rj(54,700,T.a),lineHeight:1}}>{mxn(total)}</div>
+            <div style={sec({marginBottom:4})}>Costo total estimado</div>
+            <div style={{fontSize:52,fontWeight:900,color:T.text,lineHeight:1}}>{mxn(total)}</div>
             <div style={{fontSize:13,color:T.muted,marginTop:5}}>{ruta.km} km · {mxn(total/ruta.km)}/km</div>
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:11,marginBottom:16}}>
-            {[{v:mxn(casTotal),l:'⛩ Casetas (moto)',c:'#FF9A3C'},{v:mxn(gasCosto),l:'⛽ '+litros.toFixed(1)+'L '+moto.fuel,c:T.b},{v:htime(tHoras),l:'🕐 Tiempo est.',c:T.text},{v:autonomia+'km',l:sinAlc?'⚠️ Sin alcance':'🔋 Autonomía',c:sinAlc?T.red:T.c}].map((s,i)=>(
-              <div key={i} style={sb(s.c)}><div style={{...rj(21,700,s.c)}}>{s.v}</div><div style={{fontSize:12,color:T.muted,marginTop:4}}>{s.l}</div></div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
+            {[{v:mxn(casTotal),l:'⛩ Casetas (moto)',c:'#F59E0B'},{v:mxn(gasCosto),l:'⛽ '+litros.toFixed(1)+'L '+moto.fuel,c:T.b},{v:htime(tHoras),l:'🕐 Tiempo est.',c:T.text},{v:autonomia+'km',l:sinAlc?'⚠️ Sin alcance':'🔋 Autonomía',c:sinAlc?T.red:T.a}].map((s,i)=>(
+              <div key={i} style={{background:'#F9FAFB',border:'1px solid '+T.border,borderRadius:12,padding:'12px'}}><div style={{fontSize:18,fontWeight:800,color:s.c}}>{s.v}</div><div style={{fontSize:12,color:T.muted,marginTop:4}}>{s.l}</div></div>
             ))}
           </div>
-          {(ruta.casetas||[]).length>0&&<><div style={sec()}>Casetas · tarifa moto</div>
-          {(ruta.casetas||[]).map((c,i)=>(
-            <div key={i} style={{display:'flex',justifyContent:'space-between',padding:'8px 0',borderBottom:'1px solid '+T.border}}>
-              <span style={{fontSize:14,color:T.muted}}>🛣 {c.n}</span><span style={{...rj(15,600,T.text)}}>${c.f}</span>
-            </div>
-          ))}</>}
-          <div style={{marginTop:14,padding:'10px 13px',background:T.aD,borderRadius:9,fontSize:13,color:T.a}}>🏛 Usa SCT Oficial para casetas exactas de cualquier ruta</div>
+          {(ruta.casetas||[]).length>0&&<><div style={sec()}>Casetas · tarifa moto</div>{(ruta.casetas||[]).map((c,i)=>(<div key={i} style={{display:'flex',justifyContent:'space-between',padding:'8px 0',borderBottom:'1px solid '+T.border}}><span style={{fontSize:14,color:T.textSec}}>🛣 {c.n}</span><span style={{fontSize:15,fontWeight:700,color:T.text}}>${c.f}</span></div>))}</>}
+          <div style={{marginTop:14,padding:'10px 14px',background:T.aD,border:'1px solid '+T.aB,borderRadius:10,fontSize:13,color:T.textSec}}>🏛 Usa la pestaña SCT para casetas exactas de cualquier ruta</div>
           <div style={{display:'flex',gap:10,marginTop:16}}>
-            <button onClick={()=>{setNavKm(ruta.km);setNavStep(0);setNavPct(0);setScr('navega');}} style={{...btnP(),flex:1}}>🧭 Navegar</button>
-            <button onClick={()=>{const e=guardarEnDiario();alert('✅ Rodada guardada\n'+e.ruta+' · '+e.km+'km');}} style={{padding:'15px',background:T.b,border:'none',borderRadius:13,color:'#040804',...rj(14,700,'#040804'),cursor:'pointer',whiteSpace:'nowrap'}}>📓 Guardar</button>
+            <button onClick={()=>{setNavKm(ruta.km);setNavStep(0);setNavPct(0);setScr('navega');}} style={{...btnSolid(),flex:1}}>Navegar</button>
+            <button onClick={()=>{const e=guardarEnDiario();alert('✅ Rodada guardada en tu diario');}} style={{padding:'15px 18px',background:T.aD,border:'1.5px solid '+T.a,borderRadius:12,color:T.a,fontSize:14,fontWeight:700,cursor:'pointer',whiteSpace:'nowrap'}}>📓 Guardar</button>
           </div>
         </div>
       </div>}
-    </div>
-  );}
+    </div>);}
 
   function Navega(){
     const step=NAV_STEPS[navStep]||NAV_STEPS[0];
@@ -488,263 +362,154 @@ function Rodada(){
     const coords=ruta.coords||RUTAS_AUTOPISTA[0].coords;
     const pos=routePoint(coords,navPct);
     const navRiders=[{lat:pos[0],lng:pos[1],color:T.a,you:true,name:'Tú'},{lat:pos[0]+0.005,lng:pos[1]+0.008,color:T.b,you:false,name:'Chavo',spd:75}];
-    return(
-    <div style={{flex:1,display:'flex',flexDirection:'column',background:T.bg,overflow:'hidden'}}>
+    return(<div style={{flex:1,display:'flex',flexDirection:'column',background:T.bg,overflow:'hidden'}}>
       <div style={{background:T.surf,borderBottom:'1px solid '+T.border,padding:'14px 18px',flexShrink:0}}>
         <div style={{display:'flex',alignItems:'center',gap:14}}>
-          <div style={{width:58,height:58,background:T.a,borderRadius:18,display:'flex',alignItems:'center',justifyContent:'center',fontSize:30,flexShrink:0}}>{step.icon}</div>
-          <div style={{flex:1}}>
-            <div style={{fontSize:15,fontWeight:600,color:T.text,lineHeight:1.3}}>{step.txt}</div>
-            <div style={{...rj(26,700,T.a),marginTop:4}}>{step.dist}</div>
-          </div>
-          <div style={{...rj(12,600,T.muted),letterSpacing:1}}>{navStep+1}/{NAV_STEPS.length}</div>
+          <div style={{width:58,height:58,background:T.aD,border:'1.5px solid '+T.aB,borderRadius:18,display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,flexShrink:0}}>{step.icon}</div>
+          <div style={{flex:1}}><div style={{fontSize:15,fontWeight:600,color:T.text,lineHeight:1.3}}>{step.txt}</div><div style={{fontSize:24,fontWeight:900,color:T.a,marginTop:4}}>{step.dist}</div></div>
+          <div style={{fontSize:12,color:T.muted,fontWeight:600}}>{navStep+1}/{NAV_STEPS.length}</div>
         </div>
       </div>
       <div style={{flex:1,position:'relative',overflow:'hidden'}}>
-        <MapaReal height="100%" center={[pos[0]+0.01,pos[1]]} zoom={13} riders={navRiders} route={coords} casetas={ruta.casetas||[]} spots={SPOTS_MOTO.slice(0,5)} label="Navegación activa · Córdoba VER" accentColor={T.a} showGPS={true}/>
-        <div style={{position:'absolute',top:12,left:12,background:'#00000099',backdropFilter:'blur(8px)',borderRadius:16,padding:'10px 16px',textAlign:'center',zIndex:1000}}>
-          <div style={{...rj(40,700,T.text),lineHeight:1}}>78</div><div style={{fontSize:11,color:T.muted}}>km/h</div>
+        <MapaReal height="100%" center={[pos[0]+0.01,pos[1]]} zoom={13} riders={navRiders} route={coords} casetas={ruta.casetas||[]} spots={SPOTS_MOTO.slice(0,5)} label="Navegación · Córdoba VER" accentColor={T.a} showGPS={true}/>
+        <div style={{position:'absolute',top:12,left:12,background:'rgba(255,255,255,.95)',backdropFilter:'blur(8px)',borderRadius:14,padding:'10px 16px',textAlign:'center',zIndex:1000,boxShadow:'0 2px 12px rgba(0,0,0,.15)'}}>
+          <div style={{fontSize:36,fontWeight:900,color:T.text,lineHeight:1}}>78</div><div style={{fontSize:11,color:T.muted}}>km/h</div>
         </div>
-        <div style={{position:'absolute',top:12,right:12,background:'#00000099',backdropFilter:'blur(8px)',borderRadius:12,padding:'9px 13px',zIndex:1000}}>
-          <div style={{fontSize:11,color:T.muted,marginBottom:2}}>Próx. caseta</div>
-          <div style={{...rj(14,700,'#FF9A3C')}}>⛩ {(ruta.casetas||[{n:'Sin caseta',f:0}])[0]?.n} · ${(ruta.casetas||[{n:'',f:0}])[0]?.f}</div>
+        <div style={{position:'absolute',top:12,right:12,background:'rgba(255,255,255,.95)',backdropFilter:'blur(8px)',borderRadius:12,padding:'8px 13px',zIndex:1000,boxShadow:'0 2px 12px rgba(0,0,0,.15)'}}>
+          <div style={{fontSize:10,color:T.muted,marginBottom:2}}>Próx. caseta</div>
+          <div style={{fontSize:13,fontWeight:700,color:'#F59E0B'}}>⛩ {(ruta.casetas||[{n:'Sin caseta',f:0}])[0]?.n}</div>
         </div>
       </div>
       <div style={{background:T.surf,borderTop:'1px solid '+T.border,padding:'13px 18px',flexShrink:0}}>
-        <div style={{height:4,background:T.border,borderRadius:2,marginBottom:13,overflow:'hidden'}}>
-          <div style={{height:'100%',width:Math.round(navPct*100)+'%',background:T.a,borderRadius:2,transition:'width .4s'}}/>
-        </div>
+        <div style={{height:4,background:T.border,borderRadius:2,marginBottom:13,overflow:'hidden'}}><div style={{height:'100%',width:Math.round(navPct*100)+'%',background:T.a,borderRadius:2,transition:'width .4s'}}/></div>
         <div style={{display:'flex',justifyContent:'space-around',marginBottom:13}}>
-          {[{v:navKm.toFixed(1),u:'km',l:'Restantes',c:T.a},{v:htime(navKm/(ruta.spd||80)),u:'',l:'Tiempo',c:T.text},{v:mxn(casTotal),u:'',l:'Casetas',c:'#FF9A3C'}].map((s,i)=>(
-            <div key={i} style={{textAlign:'center'}}><div style={{...rj(22,700,s.c)}}>{s.v}<span style={{fontSize:11,color:T.muted}}>{s.u}</span></div><div style={{fontSize:11,color:T.muted,letterSpacing:1,textTransform:'uppercase',marginTop:2}}>{s.l}</div></div>
-          ))}
+          {[{v:navKm.toFixed(1),u:'km',l:'Restantes',c:T.a},{v:htime(navKm/(ruta.spd||80)),u:'',l:'Tiempo',c:T.text},{v:mxn(casTotal),u:'',l:'Casetas',c:'#F59E0B'}].map((s,i)=>(<div key={i} style={{textAlign:'center'}}><div style={{fontSize:20,fontWeight:800,color:s.c}}>{s.v}<span style={{fontSize:11,color:T.muted}}>{s.u}</span></div><div style={{fontSize:11,color:T.muted,letterSpacing:.5,textTransform:'uppercase',marginTop:2}}>{s.l}</div></div>))}
         </div>
         <div style={{display:'flex',gap:10}}>
-          <button onClick={navPct>=1?reset:advance} style={{...btnP(navPct>=1?T.b:T.a),flex:1}}>{navPct>=1?'✓ Llegaste · Nueva ruta':'▶ Siguiente instrucción'}</button>
-          <button onClick={reset} style={{padding:'15px 18px',background:T.card,border:'1px solid '+T.border,borderRadius:13,...rj(16,500,T.muted),cursor:'pointer'}}>↺</button>
+          <button onClick={navPct>=1?reset:advance} style={{...btnSolid(navPct>=1?T.a:T.dark),flex:1}}>{navPct>=1?'✓ Llegaste · Nueva ruta':'▶ Siguiente instrucción'}</button>
+          <button onClick={reset} style={{padding:'15px 18px',background:T.bg,border:'1px solid '+T.border,borderRadius:12,fontSize:16,color:T.muted,cursor:'pointer'}}>↺</button>
         </div>
       </div>
-    </div>
-  );}
+    </div>);}
 
   function Grupo(){
-    const riders=GRUPO_INFO.map((g,i)=>({...g,lat:GRUPO_POS_COR[i][0],lng:GRUPO_POS_COR[i][1]}));
+    const riders=GRUPO_INFO.map((g,i)=>({...g,lat:GRUPO_POS[i][0],lng:GRUPO_POS[i][1]}));
     function compartirWA(){const msg='🏍 *RODADA: '+rodadaForm.nombre+'*\n📅 '+rodadaForm.fecha+' a las '+rodadaForm.hora+'\n📍 Salida: '+rodadaForm.salida+(rodadaForm.notas?'\n📝 '+rodadaForm.notas:'')+'\n\n✅ Confirma: '+(rodadaLink||window.location.href);window.open('https://wa.me/?text='+encodeURIComponent(msg));}
-    return(
-    <div style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden'}}>
+    return(<div style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden',background:T.bg}}>
       <div style={{display:'flex',background:T.surf,borderBottom:'1px solid '+T.border,flexShrink:0}}>
         <button style={tabBtn(grupoTab==='mapa')} onClick={()=>setGrupoTab('mapa')}>📡 Mapa en vivo</button>
         <button style={tabBtn(grupoTab==='alertas',T.red)} onClick={()=>setGrupoTab('alertas')}>🚨 Alertas</button>
-        <button style={tabBtn(grupoTab==='crear',T.b)} onClick={()=>setGrupoTab('crear')}>📅 Crear Rodada</button>
+        <button style={tabBtn(grupoTab==='crear',T.a)} onClick={()=>setGrupoTab('crear')}>📅 Crear Rodada</button>
       </div>
-
       {grupoTab==='mapa'&&<div style={{flex:1,overflowY:'auto',padding:16}}>
         <div style={card({padding:0,overflow:'hidden'})}>
-          <div style={{padding:'13px 16px 11px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-            <div>
-              <div style={{fontSize:15,fontWeight:700,color:T.text,marginBottom:2}}>{GRUPO_CORDOBA.nombre}</div>
-              <div style={{fontSize:13,color:T.muted}}>Córdoba, Veracruz · {GRUPO_CORDOBA.miembros} miembros</div>
-            </div>
-            <div style={{display:'flex',alignItems:'center',gap:5}}><div style={dot()}/><span style={{...rj(11,600,T.a),letterSpacing:1}}>EN VIVO</span></div>
-          </div>
-          <div style={{padding:'0 12px 12px'}}>
-            <MapaReal height={200} center={[18.884,-96.938]} zoom={12} riders={riders} route={[]} casetas={[]} spots={SPOTS_MOTO.slice(0,3)} label="Grupo Córdoba VER" accentColor={T.a} showGPS={true}/>
-          </div>
+          <div style={{padding:'13px 16px 11px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><div><div style={{fontSize:15,fontWeight:700,color:T.text,marginBottom:2}}>{GRUPO_CORDOBA.nombre}</div><div style={{fontSize:13,color:T.muted}}>Córdoba, Veracruz · {GRUPO_CORDOBA.miembros} miembros</div></div><div style={{display:'flex',alignItems:'center',gap:5}}><div style={dot()}/><span style={{fontSize:11,fontWeight:700,color:T.a,letterSpacing:1}}>EN VIVO</span></div></div>
+          <div style={{padding:'0 12px 12px'}}><MapaReal height={200} center={[18.884,-96.938]} zoom={12} riders={riders} route={[]} casetas={[]} spots={SPOTS_MOTO.slice(0,3)} label="Grupo Córdoba VER" accentColor={T.a} showGPS={true}/></div>
         </div>
-        <div style={card()}>
-          <div style={sec()}>Miembros activos</div>
-          {GRUPO_INFO.map((r,i)=>(
-            <div key={r.name} style={{display:'flex',alignItems:'center',gap:12,padding:'11px 0',borderBottom:'1px solid '+T.border}}>
-              <div style={{width:44,height:44,borderRadius:13,background:r.color+'20',border:'2px solid '+r.color+'33',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}}>🏍</div>
-              <div style={{flex:1}}>
-                <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:5}}>
-                  <span style={{fontSize:15,fontWeight:600,color:r.you?T.a:T.text}}>{r.you?(usuario?.nombre||'Tú'):r.name}</span>
-                  {r.pct===Math.max(...GRUPO_INFO.map(x=>x.pct))&&<span style={tg(T.a)}>Líder</span>}
-                  {r.you&&<span style={tg(T.b)}>Tú</span>}
-                </div>
-                <div style={{height:5,background:T.border,borderRadius:2,overflow:'hidden'}}><div style={{height:'100%',width:r.pct+'%',background:r.color,borderRadius:2}}/></div>
-                <div style={{fontSize:12,color:T.muted,marginTop:3}}>{r.pct}% completado</div>
-              </div>
-              <div style={{textAlign:'right',flexShrink:0}}>
-                <div style={{...rj(19,700,r.color)}}>{r.spd}<span style={{fontSize:11,color:T.muted}}> km/h</span></div>
-                <div style={{fontSize:12,color:T.muted,marginTop:2}}>🔋 {r.bat}%</div>
-              </div>
-            </div>
-          ))}
+        <div style={cardFlat()}><div style={sec()}>Miembros activos</div>
+          {GRUPO_INFO.map((r,i)=>(<div key={r.name} style={{display:'flex',alignItems:'center',gap:12,padding:'11px 0',borderBottom:'1px solid '+T.border}}>
+            <div style={{width:44,height:44,borderRadius:13,background:r.color+'15',border:'1.5px solid '+r.color+'30',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}}>🏍</div>
+            <div style={{flex:1}}><div style={{display:'flex',alignItems:'center',gap:6,marginBottom:5}}><span style={{fontSize:15,fontWeight:600,color:r.you?T.a:T.text}}>{r.you?(usuario?.nombre||'Tú'):r.name}</span>{r.you&&<span style={tg(T.a)}>Tú</span>}</div><div style={{height:4,background:T.border,borderRadius:2,overflow:'hidden'}}><div style={{height:'100%',width:r.pct+'%',background:r.color,borderRadius:2}}/></div><div style={{fontSize:12,color:T.muted,marginTop:3}}>{r.pct}% completado</div></div>
+            <div style={{textAlign:'right',flexShrink:0}}><div style={{fontSize:18,fontWeight:800,color:r.color}}>{r.spd}<span style={{fontSize:11,color:T.muted}}> km/h</span></div><div style={{fontSize:12,color:T.muted,marginTop:2}}>🔋 {r.bat}%</div></div>
+          </div>))}
         </div>
       </div>}
-
       {grupoTab==='alertas'&&<div style={{flex:1,overflowY:'auto',padding:16}}>
         <div style={sec()}>Enviar alerta al grupo</div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:11,marginBottom:18}}>
-          {ALERTAS_PRESET.map(a=>(
-            <button key={a.id} onClick={()=>enviarAlerta(a)} style={{background:a.color+'18',border:'1.5px solid '+a.color+'44',borderRadius:14,padding:'16px 10px',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:7,transition:'all .15s'}}>
-              <span style={{fontSize:30}}>{a.emoji}</span>
-              <span style={{fontSize:13,fontWeight:600,color:a.color,textAlign:'center'}}>{a.label}</span>
-            </button>
-          ))}
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:18}}>
+          {ALERTAS_PRESET.map(a=>(<button key={a.id} onClick={()=>enviarAlerta(a)} style={{background:a.color+'10',border:'1.5px solid '+a.color+'25',borderRadius:14,padding:'16px 10px',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:7}}><span style={{fontSize:28}}>{a.emoji}</span><span style={{fontSize:13,fontWeight:700,color:a.color,textAlign:'center'}}>{a.label}</span></button>))}
         </div>
         <div style={sec()}>Feed de alertas</div>
-        {alertasFeed.map((a,i)=>(
-          <div key={i} style={card({padding:'12px 15px',borderLeft:'3px solid '+(a.color||T.a)})}>
-            <div style={{display:'flex',alignItems:'center',gap:9}}>
-              <span style={{fontSize:22}}>{a.emoji}</span>
-              <div style={{flex:1}}>
-                <span style={{fontSize:14,fontWeight:600,color:T.text}}>{a.nombre}</span>
-                <span style={{fontSize:13,color:T.muted}}> · {a.hora}</span>
-                <div style={{fontSize:13,color:T.muted,marginTop:3}}>{a.texto}</div>
-              </div>
-            </div>
-          </div>
-        ))}
+        {alertasFeed.map((a,i)=>(<div key={i} style={{...cardFlat({padding:'12px 15px',marginBottom:10}),borderLeft:'3px solid '+(a.color||T.a)}}><div style={{display:'flex',alignItems:'center',gap:9}}><span style={{fontSize:22}}>{a.emoji}</span><div style={{flex:1}}><span style={{fontSize:14,fontWeight:600,color:T.text}}>{a.nombre}</span><span style={{fontSize:13,color:T.muted}}> · {a.hora}</span><div style={{fontSize:13,color:T.textSec,marginTop:3}}>{a.texto}</div></div></div></div>))}
       </div>}
-
       {grupoTab==='crear'&&<div style={{flex:1,overflowY:'auto',padding:16}}>
-        <div style={card({borderColor:T.b+'44',background:'linear-gradient(135deg,'+T.b+'10,'+T.card+')'})}>
-          <div style={{...rj(15,700,T.b),marginBottom:4}}>📅 Crear Rodada</div>
-          <div style={{fontSize:14,color:T.muted,marginBottom:18}}>Organiza tu salida y comparte el link por WhatsApp</div>
-          <div style={{marginBottom:12}}><label style={lbl()}>Nombre de la rodada</label><input style={inp()} placeholder="Ej: Vuelta a Cumbres de Maltrata 🔄" value={rodadaForm.nombre} onChange={e=>setRodadaForm(f=>({...f,nombre:e.target.value}))}/></div>
-          <div style={{display:'flex',gap:10,marginBottom:12}}>
-            <div style={{flex:1}}><label style={lbl()}>Fecha</label><input type="date" style={inp()} value={rodadaForm.fecha} onChange={e=>setRodadaForm(f=>({...f,fecha:e.target.value}))}/></div>
-            <div style={{flex:1}}><label style={lbl()}>Hora salida</label><input type="time" style={inp()} value={rodadaForm.hora} onChange={e=>setRodadaForm(f=>({...f,hora:e.target.value}))}/></div>
-          </div>
+        <div style={card({boxShadow:T.shadowMd})}>
+          <div style={{fontSize:18,fontWeight:800,color:T.text,marginBottom:4}}>📅 Crear Rodada</div>
+          <div style={{fontSize:14,color:T.muted,marginBottom:18}}>Organiza tu salida y comparte por WhatsApp</div>
+          <div style={{marginBottom:12}}><label style={lbl()}>Nombre de la rodada</label><input style={inp()} placeholder="Ej: Vuelta a Cumbres de Maltrata" value={rodadaForm.nombre} onChange={e=>setRodadaForm(f=>({...f,nombre:e.target.value}))}/></div>
+          <div style={{display:'flex',gap:10,marginBottom:12}}><div style={{flex:1}}><label style={lbl()}>Fecha</label><input type="date" style={inp()} value={rodadaForm.fecha} onChange={e=>setRodadaForm(f=>({...f,fecha:e.target.value}))}/></div><div style={{flex:1}}><label style={lbl()}>Hora salida</label><input type="time" style={inp()} value={rodadaForm.hora} onChange={e=>setRodadaForm(f=>({...f,hora:e.target.value}))}/></div></div>
           <div style={{marginBottom:12}}><label style={lbl()}>Punto de salida</label><input style={inp()} placeholder="Ej: Monumento Cuauhtémoc, Córdoba" value={rodadaForm.salida} onChange={e=>setRodadaForm(f=>({...f,salida:e.target.value}))}/></div>
-          <div style={{marginBottom:18}}><label style={lbl()}>Notas (opcional)</label><input style={inp()} placeholder="Llevar agua, ruta 3h aprox." value={rodadaForm.notas} onChange={e=>setRodadaForm(f=>({...f,notas:e.target.value}))}/></div>
-          <button onClick={generarLink} disabled={!rodadaForm.nombre||!rodadaForm.fecha||!rodadaForm.hora} style={{...btnP(T.b),opacity:(!rodadaForm.nombre||!rodadaForm.fecha)?0.4:1,marginBottom:12}}>🔗 Generar link de invitación</button>
-          {rodadaLink&&<div style={{marginBottom:12}}>
-            <div style={{padding:'11px 13px',background:T.bg,border:'1px solid '+T.border,borderRadius:9,fontSize:13,color:T.muted,wordBreak:'break-all',marginBottom:9}}>{rodadaLink}</div>
-            <div style={{display:'flex',gap:8}}>
-              <button onClick={()=>{navigator.clipboard?.writeText(rodadaLink).catch(()=>{});alert('¡Link copiado!');}} style={{flex:1,padding:'12px',background:T.card,border:'1px solid '+T.border,borderRadius:10,...rj(13,600,T.muted),cursor:'pointer'}}>📋 Copiar</button>
-              <button onClick={compartirWA} style={{flex:2,padding:'12px',background:'#25D366',border:'none',borderRadius:10,...rj(13,700,'#fff'),cursor:'pointer'}}>📲 Compartir WhatsApp</button>
-            </div>
-          </div>}
+          <div style={{marginBottom:18}}><label style={lbl()}>Notas (opcional)</label><input style={inp()} placeholder="Llevar agua, ruta de 3h" value={rodadaForm.notas} onChange={e=>setRodadaForm(f=>({...f,notas:e.target.value}))}/></div>
+          <button onClick={generarLink} disabled={!rodadaForm.nombre||!rodadaForm.fecha||!rodadaForm.hora} style={{...btnSolid(T.a),opacity:(!rodadaForm.nombre||!rodadaForm.fecha)?0.35:1,marginBottom:12}}>Generar link de invitación</button>
+          {rodadaLink&&<div style={{marginBottom:12}}><div style={{padding:'11px 13px',background:'#F9FAFB',border:'1px solid '+T.border,borderRadius:9,fontSize:13,color:T.muted,wordBreak:'break-all',marginBottom:9}}>{rodadaLink}</div><div style={{display:'flex',gap:8}}><button onClick={()=>{navigator.clipboard?.writeText(rodadaLink).catch(()=>{});alert('¡Link copiado!');}} style={{flex:1,...btnOutline(T.text)}}>📋 Copiar</button><button onClick={compartirWA} style={{flex:2,padding:'12px',background:'#25D366',border:'none',borderRadius:12,fontSize:13,fontWeight:700,color:'#fff',cursor:'pointer'}}>📲 WhatsApp</button></div></div>}
         </div>
       </div>}
-    </div>
-  );}
+    </div>);}
 
   function Negocios(){return(
-    <div style={{flex:1,overflowY:'auto',padding:16}}>
-      <div style={card({background:T.aD,borderColor:T.a+'33',padding:'12px 15px'})}><div style={{fontSize:14,color:T.a,fontWeight:500}}>📍 Negocios en Córdoba, Ver. · {ruta.from}→{ruta.to}</div></div>
-      {NEGOCIOS.map(n=>(
-        <div key={n.id} style={card({borderLeft:n.sp?'3px solid '+T.a:'none'})}>
-          <div style={{display:'flex',alignItems:'flex-start',gap:13}}>
-            <div style={{width:50,height:50,background:T.surf,borderRadius:13,display:'flex',alignItems:'center',justifyContent:'center',fontSize:24,flexShrink:0,border:'1px solid '+T.border}}>{n.ico}</div>
-            <div style={{flex:1}}>
-              <div style={{display:'flex',alignItems:'center',gap:7,marginBottom:5}}>
-                <span style={{fontSize:13,color:T.muted}}>{n.cat}</span>
-                {n.sp&&<span style={tg(T.a)}>Patrocinado</span>}
-              </div>
-              <div style={{fontSize:15,fontWeight:600,color:T.text,marginBottom:5}}>{n.name}</div>
-              <div style={{display:'flex',gap:9,marginBottom:9}}>
-                <span style={{fontSize:13,color:T.yellow}}>★ {n.stars}</span>
-                <span style={{fontSize:13,color:T.muted}}>({n.rev}) · {n.km} km</span>
-              </div>
-              <div style={{background:T.bD,border:'1px solid '+T.b+'33',borderRadius:8,padding:'7px 11px',fontSize:13,color:T.b}}>🎁 {n.promo}</div>
-            </div>
+    <div style={{flex:1,overflowY:'auto',padding:16,background:T.bg}}>
+      <div style={{background:T.aD,border:'1px solid '+T.aB,borderRadius:12,padding:'11px 15px',marginBottom:14,fontSize:14,color:T.textSec}}>📍 Negocios en ruta · {ruta.from} → {ruta.to}</div>
+      {NEGOCIOS.map(n=>(<div key={n.id} style={{...card(),borderLeft:n.sp?'3px solid '+T.a:'none'}}>
+        <div style={{display:'flex',alignItems:'flex-start',gap:12}}>
+          <div style={{width:50,height:50,background:'#F9FAFB',border:'1px solid '+T.border,borderRadius:13,display:'flex',alignItems:'center',justifyContent:'center',fontSize:24,flexShrink:0}}>{n.ico}</div>
+          <div style={{flex:1}}>
+            <div style={{display:'flex',alignItems:'center',gap:7,marginBottom:5}}><span style={{fontSize:12,color:T.muted}}>{n.cat}</span>{n.sp&&<span style={tg(T.a)}>Patrocinado</span>}</div>
+            <div style={{fontSize:15,fontWeight:700,color:T.text,marginBottom:5}}>{n.name}</div>
+            <div style={{display:'flex',gap:8,marginBottom:8}}><span style={{fontSize:13,color:'#F59E0B'}}>★ {n.stars}</span><span style={{fontSize:13,color:T.muted}}>({n.rev}) · {n.km} km</span></div>
+            <div style={{background:T.aD,border:'1px solid '+T.aB,borderRadius:8,padding:'7px 11px',fontSize:13,color:T.textSec}}>🎁 {n.promo}</div>
           </div>
         </div>
-      ))}
+      </div>))}
     </div>
   );}
 
   function Mas(){return(
-    <div style={{flex:1,overflowY:'auto',padding:16}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}}>
-        <div style={sec({marginBottom:0})}>Mantenimiento predictivo</div>
-        {specs&&<span style={tg(T.a)}>✓ {moto.modelo}</span>}
-      </div>
+    <div style={{flex:1,overflowY:'auto',padding:16,background:T.bg}}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}}><div style={sec({marginBottom:0})}>Mantenimiento predictivo</div>{specs&&<span style={tg(T.a)}>✓ {moto.modelo}</span>}</div>
       {mantItems.map((m,i)=>{const pct=Math.min(100,Math.round(m.ult/m.prox*100));const col=m.urg?T.red:pct>80?T.yellow:T.a;return(
-        <div key={i} style={card({borderLeft:'3px solid '+col,padding:'13px 15px'})}>
-          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:7}}>
-            <span style={{fontSize:14,fontWeight:600,color:T.text}}>{m.item}</span>
-            {m.urg&&<span style={tg(T.red)}>Urgente</span>}
-          </div>
-          <div style={{display:'flex',justifyContent:'space-between',fontSize:13,color:T.muted,marginBottom:8}}>
-            <span>Cada {m.cada}</span><span style={{color:col,fontWeight:600}}>faltan {m.prox-m.ult} km</span>
-          </div>
-          <div style={{height:5,background:T.border,borderRadius:3,overflow:'hidden'}}>
-            <div style={{height:'100%',width:pct+'%',background:col,borderRadius:3}}/>
-          </div>
-        </div>
-      );})}
-      {!specs&&<div style={card({borderColor:T.a+'33',background:T.aD,cursor:'pointer',padding:'14px'})} onClick={()=>setScr('moto')}>
-        <div style={{fontSize:14,color:T.a,textAlign:'center'}}>🤖 Registra tu moto para mantenimiento personalizado</div>
-      </div>}
-      {diario.length>0&&<>
-        <div style={sec({marginTop:8})}>Mi diario de rodadas</div>
-        {diario.map((d,i)=>(
-          <div key={i} style={card({padding:'13px 15px',borderLeft:'3px solid '+T.b})}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-              <div><div style={{fontSize:14,fontWeight:600,color:T.text}}>{d.ruta}</div><div style={{fontSize:12,color:T.muted,marginTop:2}}>{d.fecha} · {d.tiempo}</div></div>
-              <div style={{textAlign:'right'}}><div style={{...rj(17,700,T.b)}}>{d.km}<span style={{fontSize:11,color:T.muted}}>km</span></div><div style={{fontSize:12,color:T.muted}}>{d.costo}</div></div>
-            </div>
-          </div>
-        ))}
-        <button onClick={()=>{setDiario([]);try{localStorage.removeItem('rodada-diario');}catch(e){}}} style={{...btnP(T.card,T.muted),border:'1px solid '+T.border,marginTop:4,fontSize:13}}>Limpiar diario</button>
+        <div key={i} style={{background:T.card,boxShadow:T.shadow,borderRadius:14,padding:'13px 16px',marginBottom:10,borderLeft:'3px solid '+col}}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:7}}><span style={{fontSize:14,fontWeight:600,color:T.text}}>{m.item}</span>{m.urg&&<span style={tg(T.red)}>Urgente</span>}</div>
+          <div style={{display:'flex',justifyContent:'space-between',fontSize:13,color:T.muted,marginBottom:8}}><span>Cada {m.cada}</span><span style={{color:col,fontWeight:700}}>faltan {m.prox-m.ult} km</span></div>
+          <div style={{height:5,background:T.border,borderRadius:3,overflow:'hidden'}}><div style={{height:'100%',width:pct+'%',background:col,borderRadius:3}}/></div>
+        </div>);})}
+      {!specs&&<div style={cardFlat({cursor:'pointer',textAlign:'center'})} onClick={()=>setScr('moto')}><div style={{fontSize:14,color:T.a}}>🤖 Registra tu moto para mantenimiento personalizado</div></div>}
+      {diario.length>0&&<><div style={sec({marginTop:8})}>Mi diario de rodadas</div>
+        {diario.map((d,i)=>(<div key={i} style={{background:T.card,boxShadow:T.shadow,borderRadius:14,padding:'13px 16px',marginBottom:10,borderLeft:'3px solid '+T.a}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}><div><div style={{fontSize:14,fontWeight:600,color:T.text}}>{d.ruta}</div><div style={{fontSize:12,color:T.muted,marginTop:2}}>{d.fecha} · {d.tiempo}</div></div><div style={{textAlign:'right'}}><div style={{fontSize:17,fontWeight:800,color:T.a}}>{d.km}<span style={{fontSize:11,color:T.muted}}>km</span></div><div style={{fontSize:12,color:T.muted}}>{d.costo}</div></div></div></div>))}
+        <button onClick={()=>{setDiario([]);try{localStorage.removeItem('rodada-diario');}catch(e){}}} style={{...btnOutline(T.muted),width:'100%',marginTop:4,fontSize:13}}>Limpiar diario</button>
       </>}
-      {diario.length===0&&<div style={card({borderColor:T.b+'33',background:T.bD+'44',padding:'15px'})}>
-        <div style={{fontSize:14,color:T.b,textAlign:'center'}}>📓 Tu diario está vacío · Guarda una ruta desde Planear Ruta</div>
-      </div>}
+      {diario.length===0&&<div style={{background:T.aD,border:'1px solid '+T.aB,borderRadius:14,padding:'15px',marginBottom:14,textAlign:'center'}}><div style={{fontSize:14,color:T.textSec}}>📓 Tu diario está vacío · Guarda una ruta desde Planear Ruta</div></div>}
       <div style={sec({marginTop:8})}>Mis estadísticas</div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:11,marginBottom:15}}>
-        {[{v:'4,827',u:'km',l:'🛣 Total km',c:T.a},{v:String(23+diario.length),u:'',l:'🏍 Rodadas',c:T.b},{v:'$4,210',u:'',l:'💸 Casetas mes',c:'#FF9A3C'},{v:'186',u:'L',l:'⛽ Gasolina mes',c:T.c}].map((s,i)=>(
-          <div key={i} style={sb(s.c)}><div style={{...rj(24,700,s.c)}}>{s.v}<span style={{fontSize:13,color:T.muted}}>{s.u}</span></div><div style={{fontSize:13,color:T.muted,marginTop:4}}>{s.l}</div></div>
-        ))}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:14}}>
+        {[{v:'4,827',u:'km',l:'🛣 Total',c:T.a},{v:String(23+diario.length),u:'',l:'🏍 Rodadas',c:T.b},{v:'$4,210',u:'',l:'💸 Casetas mes',c:'#F59E0B'},{v:'186',u:'L',l:'⛽ Gasolina mes',c:'#8B5CF6'}].map((s,i)=>(<div key={i} style={sb(s.c,'#F9FAFB')}><div style={{fontSize:24,fontWeight:900,color:s.c,lineHeight:1}}>{s.v}<span style={{fontSize:13,color:T.muted}}>{s.u}</span></div><div style={{fontSize:13,color:T.textSec,marginTop:4,border:'none'}}>{s.l}</div></div>))}
       </div>
-      <div style={card({borderLeft:'3px solid '+T.red,textAlign:'center',padding:'24px 16px'})}>
+      <div style={{background:T.redD,border:'1px solid '+T.redB,borderRadius:16,textAlign:'center',padding:'24px 16px',marginBottom:14}}>
         <div style={{fontSize:14,color:T.muted,marginBottom:15}}>¿Emergencia en carretera?</div>
-        <button style={{...btnP(T.red,'#fff'),fontSize:20,letterSpacing:3,padding:'18px'}}>🆘 BOTÓN SOS</button>
+        <button style={{...btnSolid(T.red),fontSize:18,letterSpacing:1,padding:'18px'}}>🆘 BOTÓN SOS</button>
         <div style={{fontSize:13,color:T.muted,marginTop:13,lineHeight:1.7}}>Comparte ubicación · Emergencias · Taller más cercano</div>
       </div>
     </div>
   );}
 
-  // ── Navegación inferior ─────────────────────────────────────────────────
   const NAV=[{id:'home',ico:'🏠',lbl:'Inicio'},{id:'moto',ico:'🏍',lbl:'Mi Moto'},{id:'ruta',ico:'🗺',lbl:'Ruta'},{id:'navega',ico:'🧭',lbl:'GPS'},{id:'grupo',ico:'📡',lbl:'Grupo'},{id:'negocios',ico:'🏢',lbl:'Negoc.'},{id:'mas',ico:'⚙️',lbl:'Más'}];
-  const TITLES={home:'Córdoba, Veracruz',moto:'Mi Moto · IA',ruta:'Planear Ruta',navega:'Navegación GPS',grupo:'Grupo + Rodadas',negocios:'Negocios',mas:'Más',reg:'Registro'};
+  const TITLES={home:'Córdoba, Veracruz',moto:'Mi Moto · IA',ruta:'Planear Ruta',navega:'Navegación GPS',grupo:'Grupo + Rodadas',negocios:'Negocios',mas:'Más'};
 
-  if(scr==='reg')return(
-    <div style={{fontFamily:"'Barlow',sans-serif",background:T.bg,color:T.text,height:'100dvh',display:'flex',flexDirection:'column',maxWidth:440,margin:'0 auto',overflow:'hidden'}}>
-      <ThemePicker/>
-      {Registro()}
-    </div>
-  );
+  if(scr==='reg')return(<div style={{fontFamily:"'Inter',sans-serif",background:T.bg,color:T.text,height:'100dvh',display:'flex',flexDirection:'column',maxWidth:440,margin:'0 auto',overflow:'hidden'}}>{Registro()}</div>);
 
   return(
-    <div style={{fontFamily:"'Barlow',sans-serif",background:T.bg,color:T.text,height:'100dvh',display:'flex',flexDirection:'column',maxWidth:440,margin:'0 auto',overflow:'hidden',transition:'background .3s'}}>
-      {scr!=='navega'&&<div style={{background:T.surf,borderBottom:'1px solid '+T.border,padding:'12px 18px 10px',display:'flex',alignItems:'center',flexShrink:0}}>
-        <div style={{...rj(24,700,T.a),letterSpacing:4}}>RODADA</div>
-        <div style={{fontSize:12,color:T.muted,marginLeft:9,marginTop:3,letterSpacing:2,textTransform:'uppercase'}}>{TITLES[scr]}</div>
-        <div style={{marginLeft:'auto',display:'flex',alignItems:'center',gap:6}}><div style={dot()}/><span style={{...rj(12,600,T.a)}}>GPS</span></div>
+    <div style={{fontFamily:"'Inter',sans-serif",background:T.bg,color:T.text,height:'100dvh',display:'flex',flexDirection:'column',maxWidth:440,margin:'0 auto',overflow:'hidden'}}>
+      {scr!=='navega'&&<div style={{background:T.surf,borderBottom:'1px solid '+T.border,padding:'12px 18px',display:'flex',alignItems:'center',flexShrink:0}}>
+        <div style={{fontSize:22,fontWeight:900,color:T.text,letterSpacing:2}}>ROD<span style={{color:T.a}}>ADA</span></div>
+        <div style={{fontSize:11,color:T.muted,marginLeft:10,fontWeight:600,letterSpacing:1.5,textTransform:'uppercase'}}>{TITLES[scr]}</div>
+        <div style={{marginLeft:'auto',display:'flex',alignItems:'center',gap:6,background:T.aD,border:'1px solid '+T.aB,borderRadius:20,padding:'4px 10px'}}><div style={dot()}/><span style={{fontSize:10,fontWeight:700,color:T.a,letterSpacing:1}}>GPS</span></div>
       </div>}
-      <ThemePicker/>
       <div style={{flex:1,overflow:'hidden',display:'flex',flexDirection:'column'}}>
-        {scr==='home'&&Home()}
-        {scr==='moto'&&MiMoto()}
-        {scr==='ruta'&&Ruta()}
-        {scr==='navega'&&Navega()}
-        {scr==='grupo'&&Grupo()}
-        {scr==='negocios'&&Negocios()}
-        {scr==='mas'&&Mas()}
+        {scr==='home'&&Home()}{scr==='moto'&&MiMoto()}{scr==='ruta'&&Ruta()}{scr==='navega'&&Navega()}{scr==='grupo'&&Grupo()}{scr==='negocios'&&Negocios()}{scr==='mas'&&Mas()}
       </div>
       <div style={{display:'flex',background:T.surf,borderTop:'1px solid '+T.border,flexShrink:0,paddingBottom:'env(safe-area-inset-bottom)'}}>
         {NAV.map(n=>{const a=scr===n.id;return(
           <button key={n.id} onClick={()=>setScr(n.id)} style={{flex:1,padding:'8px 0 10px',background:'none',border:'none',borderTop:'2.5px solid '+(a?T.a:'transparent'),color:a?T.a:T.muted,cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:2,transition:'color .15s'}}>
             <span style={{fontSize:18}}>{n.ico}</span>
-            <span style={{fontFamily:"'Rajdhani',sans-serif",fontSize:10,fontWeight:a?700:500,letterSpacing:1,textTransform:'uppercase'}}>{n.lbl}</span>
-          </button>
-        );})}
+            <span style={{fontSize:10,fontWeight:a?700:500,letterSpacing:.5,textTransform:'uppercase'}}>{n.lbl}</span>
+          </button>);})}
       </div>
     </div>
   );
 }
-
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(Rodada));
 
 </script>
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').then(function(r){console.log('RODADA v7 OK · Córdoba VER');}).catch(function(e){console.log('SW err',e);});});}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').then(function(r){console.log('RODADA v8 Moto Pro OK');}).catch(function(e){console.log('SW err',e);});});}
 </script>
 </body>
 </html>
