@@ -467,12 +467,12 @@ export default function Rodada(){
       {moto.marca&&<div style={card()}>
         <div style={sec()}>3 · Año y combustible</div>
         <div style={{display:'flex',gap:10,marginBottom:12}}>
-          <div style={{flex:1}}><label style={lbl()}>Año</label><input type="number" style={inp()} value={moto.year} min="2000" max="2026" onChange={e=>setMoto({...moto,year:e.target.value})}/></div>
-          <div style={{flex:1}}><label style={lbl()}>Cilindraje (cc)</label><input type="number" style={inp()} placeholder="ej. 450" value={moto.cc} onChange={e=>setMoto({...moto,cc:e.target.value})}/></div>
+          <div style={{flex:1}}><label style={lbl()}>Año</label><input type="number" style={inp()} value={moto.year} min="2000" max="2026" onChange={e=>setMoto(m=>({...m,year:e.target.value}))}/></div>
+          <div style={{flex:1}}><label style={lbl()}>Cilindraje (cc)</label><input type="number" style={inp()} placeholder="ej. 450" value={moto.cc} onChange={e=>setMoto(m=>({...m,cc:e.target.value}))}/></div>
         </div>
         <label style={lbl()}>Tipo de combustible</label>
         <div style={{display:'flex',gap:8}}>
-          {['magna','premium'].map(f=><button key={f} onClick={()=>setMoto({...moto,fuel:f})} style={pill(moto.fuel===f)}>⛽ {f.charAt(0).toUpperCase()+f.slice(1)}</button>)}
+          {['magna','premium'].map(f=><button key={f} onClick={()=>setMoto(m=>({...m,fuel:f}))} style={pill(moto.fuel===f)}>⛽ {f.charAt(0).toUpperCase()+f.slice(1)}</button>)}
         </div>
       </div>}
 
@@ -480,8 +480,8 @@ export default function Rodada(){
       {specs&&<div style={card()}>
         <div style={sec()}>Ajuste fino (opcional)</div>
         <div style={{display:'flex',gap:10}}>
-          <div style={{flex:1}}><label style={lbl()}>Tanque (L) <span style={{color:T.a}}>✓</span></label><input type="number" style={inpHL()} value={moto.tanque} onChange={e=>setMoto({...moto,tanque:e.target.value})}/></div>
-          <div style={{flex:1}}><label style={lbl()}>Rend. km/L <span style={{color:T.a}}>✓</span></label><input type="number" style={inpHL()} value={moto.rend} onChange={e=>setMoto({...moto,rend:e.target.value})}/></div>
+          <div style={{flex:1}}><label style={lbl()}>Tanque (L) <span style={{color:T.a}}>✓</span></label><input type="number" style={inpHL()} value={moto.tanque} onChange={e=>setMoto(m=>({...m,tanque:e.target.value}))}/></div>
+          <div style={{flex:1}}><label style={lbl()}>Rend. km/L <span style={{color:T.a}}>✓</span></label><input type="number" style={inpHL()} value={moto.rend} onChange={e=>setMoto(m=>({...m,rend:e.target.value}))}/></div>
         </div>
       </div>}
 
@@ -700,8 +700,6 @@ const Ruta=()=>(
 
   const NAV=[{id:'home',ico:'🏠',lbl:'Inicio'},{id:'moto',ico:'🏍',lbl:'Mi Moto'},{id:'ruta',ico:'🗺',lbl:'Ruta'},{id:'navega',ico:'🧭',lbl:'GPS'},{id:'grupo',ico:'📡',lbl:'Grupo'},{id:'negocios',ico:'🏢',lbl:'Negoc.'},{id:'mas',ico:'⚙️',lbl:'Más'}];
   const TITLES={home:'Tu copiloto moto',moto:'Mi Moto · IA',ruta:'Planear Ruta',navega:'Navegación GPS',grupo:'Grupo en Vivo',negocios:'Negocios en Ruta',mas:'Más'};
-  const SCREENS={home:<Home/>,moto:<MiMoto/>,ruta:<Ruta/>,navega:<Navega/>,grupo:<Grupo/>,negocios:<Negocios/>,mas:<Mas/>};
-
   return(
     <>
       <style>{CSS}</style>
@@ -714,7 +712,15 @@ const Ruta=()=>(
           </div>
         )}
         <ThemePicker/>
-        <div style={{flex:1,overflow:'hidden',display:'flex',flexDirection:'column'}}>{SCREENS[scr]}</div>
+        <div style={{flex:1,overflow:'hidden',display:'flex',flexDirection:'column'}}>
+          {scr==='home'&&Home()}
+          {scr==='moto'&&MiMoto()}
+          {scr==='ruta'&&Ruta()}
+          {scr==='navega'&&Navega()}
+          {scr==='grupo'&&Grupo()}
+          {scr==='negocios'&&Negocios()}
+          {scr==='mas'&&Mas()}
+        </div>
         <div style={{display:'flex',background:T.surf,borderTop:`1px solid ${T.border}`,flexShrink:0}}>
           {NAV.map(n=>{const a=scr===n.id;return(
             <button key={n.id} onClick={()=>setScr(n.id)} style={{flex:1,padding:'7px 0 9px',background:'none',border:'none',borderTop:`2px solid ${a?T.a:'transparent'}`,color:a?T.a:T.muted,cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:2,transition:'color .15s'}}>
