@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <title>Max Daniela - Monograma Refugio</title>
+  <rect width="600" height="600" fill="#F2E8D5"/>
+  <!-- puerta / arco = lugar seguro -->
+  <path d="M130 520 V260 A170 170 0 0 1 470 260 V520 Z" fill="#6B1F2A"/>
+  <path d="M160 520 V262 A140 140 0 0 1 440 262 V520" fill="none" stroke="#D98E32" stroke-width="4"/>
+  <g font-family="Georgia,'Times New Roman',serif" font-weight="700" fill="#F2E8D5" text-anchor="middle">
+    <text x="232" y="350" font-size="140">M</text>
+    <text x="372" y="350" font-size="140" fill="#D98E32">D</text>
+    <text x="300" y="430" font-size="21" letter-spacing="6" font-weight="400">MAX DANIELA</text>
+    <text x="300" y="480" font-size="22" letter-spacing="10" fill="#D98E32" font-weight="400">DESDE 1994</text>
+  </g>
+  <circle cx="300" cy="170" r="14" fill="#D98E32"/>
+  <path d="M300 140 V120 M268 152 L256 138 M332 152 L344 138" stroke="#D98E32" stroke-width="5" stroke-linecap="round"/>
+</svg>

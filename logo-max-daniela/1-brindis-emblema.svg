@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <title>Max Daniela - Emblema Brindis</title>
+  <defs>
+    <path id="top" d="M 90 300 A 210 210 0 0 1 510 300"/>
+    <path id="bot" d="M 76 300 A 224 224 0 0 0 524 300"/>
+  </defs>
+  <circle cx="300" cy="300" r="280" fill="#1F3D36"/>
+  <circle cx="300" cy="300" r="266" fill="none" stroke="#F2E8D5" stroke-width="4"/>
+  <circle cx="300" cy="300" r="150" fill="none" stroke="#D98E32" stroke-width="3"/>
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#F2E8D5" text-anchor="middle" font-weight="700">
+    <text font-size="52" letter-spacing="8"><textPath href="#top" startOffset="50%">MAX DANIELA</textPath></text>
+    <text font-size="30" letter-spacing="10" fill="#D98E32"><textPath href="#bot" startOffset="50%" side="left">DESDE 1994</textPath></text>
+  </g>
+  <text x="60" y="310" font-size="26" fill="#D98E32" font-family="Georgia,serif">★</text>
+  <text x="514" y="310" font-size="26" fill="#D98E32" font-family="Georgia,serif">★</text>
+  <!-- dos vasos brindando -->
+  <g stroke="#F2E8D5" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+    <g transform="rotate(-14 255 340)">
+      <path d="M215 270 H295 L286 385 Q285 396 274 396 H236 Q225 396 224 385 Z" fill="#1F3D36"/>
+      <path d="M221 330 H289 L286 385 Q285 396 274 396 H236 Q225 396 224 385 Z" fill="#D98E32" stroke="none"/>
+    </g>
+    <g transform="rotate(14 345 340)">
+      <path d="M305 270 H385 L376 385 Q375 396 364 396 H326 Q315 396 314 385 Z" fill="#1F3D36"/>
+      <path d="M311 330 H379 L376 385 Q375 396 364 396 H326 Q315 396 314 385 Z" fill="#D98E32" stroke="none"/>
+    </g>
+  </g>
+  <g stroke="#D98E32" stroke-width="6" stroke-linecap="round">
+    <path d="M300 236 V210"/><path d="M270 244 L256 222"/><path d="M330 244 L344 222"/>
+  </g>
+</svg>
