@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
-  <title>Max Daniela - Emblema Brindis</title>
+  <title>Max Daniels - Emblema Brindis</title>
   <defs>
     <path id="top" d="M 90 300 A 210 210 0 0 1 510 300"/>
     <path id="bot" d="M 76 300 A 224 224 0 0 0 524 300"/>
@@ -8,7 +8,7 @@
   <circle cx="300" cy="300" r="266" fill="none" stroke="#F2E8D5" stroke-width="4"/>
   <circle cx="300" cy="300" r="150" fill="none" stroke="#D98E32" stroke-width="3"/>
   <g font-family="Georgia, 'Times New Roman', serif" fill="#F2E8D5" text-anchor="middle" font-weight="700">
-    <text font-size="52" letter-spacing="8"><textPath href="#top" startOffset="50%">MAX DANIELA</textPath></text>
+    <text font-size="52" letter-spacing="8"><textPath href="#top" startOffset="50%">MAX DANIELS</textPath></text>
     <text font-size="30" letter-spacing="10" fill="#D98E32"><textPath href="#bot" startOffset="50%" side="left">DESDE 1994</textPath></text>
   </g>
   <text x="60" y="310" font-size="26" fill="#D98E32" font-family="Georgia,serif">★</text>
