@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <title>Max Daniels - Wordmark minimal</title>
+  <rect width="800" height="400" fill="#F4F1EA"/>
+  <g font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" fill="#111">
+    <text x="400" y="215" text-anchor="middle" font-size="108" font-weight="800" letter-spacing="-5">max daniels<tspan fill="#FF5B2E">.</tspan></text>
+    <line x1="150" y1="262" x2="650" y2="262" stroke="#111" stroke-width="2"/>
+    <text x="150" y="304" font-size="21" font-weight="600" letter-spacing="8">BAR</text>
+    <text x="650" y="304" text-anchor="end" font-size="21" font-weight="600" letter-spacing="8">EST. 1994</text>
+  </g>
+</svg>

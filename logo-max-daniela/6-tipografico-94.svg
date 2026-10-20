@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <title>Max Daniels - Tipográfico 94</title>
+  <rect width="600" height="600" fill="#A8B5A0"/>
+  <g font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" fill="#14181A" text-anchor="middle">
+    <text x="300" y="300" font-size="290" font-weight="900" letter-spacing="-14">94</text>
+    <rect x="70" y="330" width="460" height="14" fill="#FF5B2E"/>
+    <text x="300" y="418" font-size="66" font-weight="900" letter-spacing="-1">MAX DANIELS</text>
+    <text x="300" y="470" font-size="22" font-weight="700" letter-spacing="14">BAR DE AMIGOS</text>
+  </g>
+</svg>

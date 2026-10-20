@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <title>Max Daniels - Icono geométrico</title>
+  <rect width="800" height="400" fill="#14181A"/>
+  <!-- icono: copa = triángulo + círculo (aceituna) + base -->
+  <g transform="translate(110 70)">
+    <rect width="260" height="260" rx="64" fill="#FF5B2E"/>
+    <path d="M60 76 H200 L130 156 Z" fill="none" stroke="#14181A" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M130 156 V204 M92 204 H168" stroke="#14181A" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="178" cy="60" r="17" fill="#14181A"/>
+  </g>
+  <g font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" fill="#F4F1EA">
+    <text x="410" y="188" font-size="78" font-weight="800" letter-spacing="-2">max</text>
+    <text x="410" y="266" font-size="78" font-weight="800" letter-spacing="-2" fill="#FF5B2E">daniels</text>
+    <text x="414" y="310" font-size="19" font-weight="600" letter-spacing="7" fill="#A8B5A0">BAR · 1994</text>
+  </g>
+</svg>
